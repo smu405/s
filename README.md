@@ -21,3 +21,37 @@
 * wk13 - PCA (scikit3 isl6)
     Dimensionality Reduction PCA LDA
 
+## 참고문헌
+* Harrington, Peter. Machine learning in action. Manning, 2012. -> python
+
+* James, Gareth, et al. An introduction to statistical learning. Vol. 112. New
+York: springer, 2013. -> R
+
+* Segaran, Toby. Programming collective intelligence: building smart web 2.0
+applications. " O'Reilly Media, Inc.", 2007. -> python
+
+* Bell, Jason. Machine learning: Hands-on for developers and technical
+professionals. John Wiley & Sons, 2014. -> weka
+
+* Murphy, Kevin P. Machine learning: a probabilistic perspective. MIT press,
+2012. -> no programming but full of equations
+
+* Conway, Drew, and John Myles White. Machine Learning for Email: Spam Filtering
+and Priority Inbox. " O'Reilly Media, Inc.", 2011. -> R
+
+* Conway, Drew, and John White. Machine learning for hackers. " O'Reilly Media,
+Inc.", 2012. -> R
+
+* Hackeling, Gavin. Mastering Machine Learning with scikit-learn. Packt
+Publishing Ltd, 2014. -> python library
+
+Shalev-Shwartz, Shai, and Shai Ben-David. Understanding machine learning: From
+theory to algorithms. Cambridge University Press, 2014. -> theory
+
+Marsland, Stephen. Machine learning: an algorithmic perspective. CRC press,
+2015. -> python
+
+
+
+
+
