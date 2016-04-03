@@ -1,3 +1,5 @@
+[![Gitter](https://badges.gitter.im/smu405/s.svg)](https://gitter.im/smu405/s?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 # 응용통계
 
 ## 목적
@@ -22,9 +24,12 @@
 
 ## 과제
 
-* 세미나 발표
-* 무작위 검증 보고서
-* 텍스트 처리
+- 세미나 발표
+- 5주 4월 5일 월요일 기한 랜덤프로그램
+    - 랜덤프로그램
+    - 통계분석
+- 텍스트마이닝 트위터 가져오기 또는 깃텁
+
 
 ## 평가기준
 
