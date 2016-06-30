@@ -2,6 +2,8 @@
 
 # 응용통계
 
+[![Join the chat at https://gitter.im/smu405/s](https://badges.gitter.im/smu405/s.svg)](https://gitter.im/smu405/s?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## 목적
 
 * 프로그래밍으로 ML 배우기
