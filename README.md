@@ -1,79 +1,47 @@
 [![Gitter](https://badges.gitter.im/smu405/s.svg)](https://gitter.im/smu405/s?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-# 응용통계
+# 연계전공
 
-## 목적
+## 교과목 개요
+파이썬을 사용하여 대량의 데이터를 분석한다. 웹사이트를 크롤링하는 실습을 한다. SNS에서 데이터를 수집하는 방식으로 OAuth인증과 REST API를 실습한다. 수집된 데이터는 파일 또는 NoSql을 사용하여 저장한다. 서울시 열린광장에서 데이터를 가져와서 분석하는 실습을 하게 된다. 또한 대량의 데이터 분석하는 스파크에 대해 실습을 한다.
 
-* 프로그래밍으로 ML 배우기
+## 교과목 목표
+대량의 데이터를 프로그래밍으로 수집, 정제, 저장, 분석, 시각화를 할 수 있다.
+    * 모듈1: 소개
+    * 모듈2: 데이터수집 (1) 웹, (2) api
+    * 모듈3: 데이터저장
+    * 모듈4: 분석
+    * 모듈5: 실시간 분석 spark
+    * 모듈6: 시각화
 
 ## 주별 강의
 
-* 주 3 - knn 2조
-* 주 4 - Tree 2조
-* 주 5 - Bayesian 1조
-* 주 6 - Logistic regression 3조
-* 주 7 - SVM 4조
-* 주 8
-* 주 9 - AdaBoosting 4조
-* 주 10 - Linear Regression 4조
-* 주 11 - cart 3조
-* 주 12 - Clustering 1조
-* 주 13- apriori 2조
-* 주 14 - FP
-* 주 15 - PCA
+* 주 1:  9-05월  9-07수 Hello ds
+    * 환경설정
+    * 프로그래밍을 모르는 학생을 위해, 속성으로 python을 소개한다
+        * 문법, 데이터형, 연산자, 제어구조, 함수, 파일, 객체
+        * 데이터사이언스에 필요한 도구 - IPython, Numpy, Scipy, Matplotlib, Pandas, Scikit-learn
+* 주 2:  9-12월  9-14수 web data - 기본 기술 설명. 9-14추석
+* 주 3:  9-19월  9-21수 
+* 주 4:  9-26월  9-28수 twitter api
+* 주 5: 10-03월 10-05수 
+* 주 6: 10-10월 10-12수 save csv, nosql
+* 주 7: 10-17월 10-19수 열린광장 api
+* 주 8: 10-24월 10-26수 midterm
+* 주 9: 10-31월 11-02수 github api, graph
+* 주10: 11-07월 11-09수 
+* 주11: 11-14월 11-16수 spark
+* 주12: 11-21월 11-23수 
+* 주13: 11-28월 11-30수 
+* 주14: 12-05월 12-07수 
+* 주15: 12-19월 12-21수 final
+
 
 ## 과제
-
-- 세미나 발표
-- 5주 4월 5일 월요일 기한 랜덤프로그램
-    - 랜덤프로그램
-    - 통계분석
-- 텍스트마이닝 트위터 가져오기 또는 깃텁
-
+* 빅데이터 과제를 제안하여, 완성한다.
 
 ## 평가기준
 
-* 준비
-    * 시간에 맞추어 준비 자료를 올렸는가?
-        * 자료파일, 프로그램, 결과파일
-        * 발표 전 주 토요일까지
-    * 준비자료가 완성되었는가?
-    * 사례를 완성했는가?
-* 이해
-    * 발표 중간 질문에 이해하고 답하였는가?
-    * 발표를 이해하지 못하고 설명하지 못하는 부분이 있었는가?
-* 전달
-    * 듣는 사람의 질문을 유도하였는가?
-    * 듣는 사람의 질문에 충분히 답을 할 수 있었는가?
-
 
 ## 참고문헌
-* Harrington, Peter. Machine learning in action. Manning, 2012. -> python
-
-* James, Gareth, et al. An introduction to statistical learning. Vol. 112. New
-York: springer, 2013. -> R
-
-* Segaran, Toby. Programming collective intelligence: building smart web 2.0
-applications. " O'Reilly Media, Inc.", 2007. -> python
-
-* Bell, Jason. Machine learning: Hands-on for developers and technical
-professionals. John Wiley & Sons, 2014. -> weka
-
-* Murphy, Kevin P. Machine learning: a probabilistic perspective. MIT press,
-2012. -> no programming but full of equations
-
-* Conway, Drew, and John Myles White. Machine Learning for Email: Spam Filtering
-and Priority Inbox. " O'Reilly Media, Inc.", 2011. -> R
-
-* Conway, Drew, and John White. Machine learning for hackers. " O'Reilly Media,
-Inc.", 2012. -> R
-
-* Hackeling, Gavin. Mastering Machine Learning with scikit-learn. Packt
-Publishing Ltd, 2014. -> python library
-
-* Shalev-Shwartz, Shai, and Shai Ben-David. Understanding machine learning: From
-theory to algorithms. Cambridge University Press, 2014. -> theory
-
-* Marsland, Stephen. Machine learning: an algorithmic perspective. CRC press,
-2015. -> python
 
