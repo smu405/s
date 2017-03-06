@@ -1,6 +1,6 @@
 [![Gitter](https://badges.gitter.im/smu405/s.svg)](https://gitter.im/smu405/s?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-# 연계전공
+# 빅데이터 프로그래밍
 
 ## 교과목 개요
 
@@ -20,7 +20,7 @@
 
 This class is to teach programming required over the steps to analyze large-scale datasets.
 The students will learn to collect the data by crawling web sites and use OAuth protocols and REST API.
-The data will be saved in fileis or NoSQL.
+The data will be saved in files or NoSQL.
 We will also learn to program to get open data provided by the government.
 We choose to use Python and Spark for programming over the stages of data clean-up, machine learning and visualization.
 Each lecture will begin with background concepts to cover the day's topics.
