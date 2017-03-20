@@ -31,30 +31,29 @@ Then the rest of the class will be spent on lab sessions for the students to app
 주 | 일자 | 내용
 -----|-----|-----
 주 1 | 3-06월 3-08수 | intro 환경 Python 소개 IPython, Numpy, Scipy, Matplotlib, Pandas, Scikit-learn
-주 2 | 3-13월 3-15수 | web crawl html dom xpath
-주 3 | 3-20월 3-22수 | regex, beautifulSoup, lxml
-주 4 | 3-27월 3-29수 | web scrapy
-주 5 | 4-03월 4-05수 | twitter api
-주 6 | 4-10월 4-12수 | 열린데이터 api
-주 7 | 4-17월 4-19수 | save csv, nosql (project 1)
+주 2 | 3-13월 3-15수 | web crawl html dom
+주 3 | 3-20월 3-22수 | web crawl regex, beautifulSoup
+주 4 | 3-27월 3-29수 | web crawl xpath, css
+주 5 | 4-03월 4-05수 | web scrapy
+주 6 | 4-10월 4-12수 | twitter api
+주 7 | 4-17월 4-19수 | 열린데이터 api, save csv, nosql (project 1)
 주 8 | 4-24월 | midterm
-주 9 | 5-01월 5-03수 | spark rdd map-reduce
-주 10 | 5-08월 5-10수 | spark dataframe sql
-주 11 | 5-15월 5-17수 | spark graph
-주 12 | 5-22월 5-24수 | spark ml
+주 9 | 5-01월 5-03수 | spark 
+주 10 | 5-08월 5-10수 | spark rdd map-reduce 
+주 11 | 5-15월 5-17수 | spark dataframe sql
+주 12 | 5-22월 5-24수 | spark graph
 주 13 | 5-29월 5-31수 | spark ml
 주 14 | 6-05월 6-07수 | spark ml (project 2)
 주 15 | 6-19월 | final
 
-* cloud jupyter notebook
-    * Azure Notebook
-    * Google cloud engine
-
 ## 과제
 * 빅데이터 과제를 제안하여, 완성한다.
+* 다음 일정에 따라 github에 제출한다.
 
-## 평가기준
-
+주 | 기한 | 내용
+-----|-----|-----
+1차 | 6주 토요일 | 문제를 정하고, 어떤 데이터를 사용할 것인지. github에 제출
+2차 | 13주 토요일 | 전체 제출. 문서출력 및 github에 소스코드 제출. 14주차 발표.
 
 ## 참고문헌
 
