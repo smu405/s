@@ -30,21 +30,21 @@ Then the rest of the class will be spent on lab sessions for the students to app
 
 주 | 일자 | 내용
 -----|-----|-----
-주 1 | 3-06월 3-08수 | intro 환경 Python 소개 IPython, Numpy, Scipy, Matplotlib, Pandas, Scikit-learn
-주 2 | 3-13월 3-15수 | web crawl html dom
-주 3 | 3-20월 3-22수 | web crawl regex, beautifulSoup
-주 4 | 3-27월 3-29수 | web crawl xpath, css
-주 5 | 4-03월 4-05수 | web scrapy
-주 6 | 4-10월 4-12수 | twitter api
-주 7 | 4-17월 4-19수 | 열린데이터 api, save csv, nosql (project 1)
-주 8 | 4-24월 | midterm
-주 9 | 5-01월 5-03수 | spark 
-주 10 | 5-08월 5-10수 | spark rdd map-reduce 
-주 11 | 5-15월 5-17수 | spark dataframe sql
-주 12 | 5-22월 5-24수 | spark graph
-주 13 | 5-29월 5-31수 | spark ml
-주 14 | 6-05월 6-07수 | spark ml (project 2)
-주 15 | 6-19월 | final
+주 1 | 9-04월 9-05화 | intro 환경 Python 소개 IPython, Numpy, Scipy, Matplotlib, Pandas, Scikit-learn
+주 2 | 9-11월 9-12화 | web crawl html dom
+주 3 | 9-18월 9-19화 | web crawl regex, beautifulSoup
+주 4 | 9-25월 9-26화 | web crawl xpath, css
+주 5 | 10-02월 10-03화 | web scrapy
+주 6 | 10-09월 10-10화 | twitter api
+주 7 | 10-16월 10-17화 | 열린데이터 api, save csv, nosql (project 1)
+주 8 | 10-23월 | midterm
+주 9 | 10-30월 10-31화 | spark 
+주 10 | 11-06월 11-07화 | spark rdd map-reduce 
+주 11 | 11-13월 11-14화 | spark dataframe sql
+주 12 | 11-20월 11-21화 | spark graph
+주 13 | 11-27월 11-28화 | spark ml
+주 14 | 12-04월 12-05화 | spark ml (project 2)
+주 15 | 12-11월 | final
 
 ## 과제
 * 빅데이터 과제를 제안하여, 완성한다.
