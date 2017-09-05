@@ -34,7 +34,7 @@ Then the rest of the class will be spent on lab sessions for the students to app
 주 2 | 9-11월 9-12화 | web crawl html dom
 주 3 | 9-18월 9-19화 | web crawl regex, beautifulSoup
 주 4 | 9-25월 9-26화 | web crawl xpath, css
-주 5 | 10-02월 10-03화 | web scrapy
+주 5 | 10-02월 10-03화 | 
 주 6 | 10-09월 10-10화 | twitter api
 주 7 | 10-16월 10-17화 | 열린데이터 api, save csv, nosql (project 1)
 주 8 | 10-23월 | midterm
