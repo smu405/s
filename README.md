@@ -2,6 +2,8 @@
 
 # 빅데이터 프로그래밍
 
+* 최종수정일 2017-10-10화, 보강 및 시험일자 수정
+
 ## 교과목 개요
 
 * 본 교과목에서는 대량의 데이터를 분석하는 각 단계를 프로그래밍으로 하는 방법을 배운다.
@@ -26,34 +28,36 @@ We choose to use Python and Spark for programming over the stages of data clean-
 Each lecture will begin with background concepts to cover the day's topics.
 Then the rest of the class will be spent on lab sessions for the students to apply their learning and to complete programming exercises.
 
-## 주별 강의
+## 주별 강의 (-는 제외)
 
 주 | 일자 | 내용
 -----|-----|-----
-주 1 | 9-04월 9-05화 | intro 환경 Python 소개 IPython, Numpy, Scipy, Matplotlib, Pandas, Scikit-learn
+주 1 | 9-04월 9-05화 | intro 환경 Python 소개 IPython, -(Numpy, Scipy, Matplotlib, Pandas, Scikit-learn)
 주 2 | 9-11월 9-12화 | web crawl html dom
-주 3 | 9-18월 9-19화 | web crawl regex, beautifulSoup
-주 4 | 9-25월 9-26화 | web crawl xpath, css
-주 5 | 10-02월 10-03화 | 
-주 6 | 10-09월 10-10화 | twitter api
-주 7 | 10-16월 10-17화 | 열린데이터 api, save csv, nosql (project 1)
-주 8 | 10-23월 | midterm
-주 9 | 10-30월 10-31화 | spark 
+주 3 | 9-18월 9-19화 | web crawl -regex, beautifulSoup
+주 4 | 9-25월 9-26화 | web crawl -xpath, css
+주 5 | 10-02월 10-03화 | 추석휴강
+주 6 | 10-09월 10-10화 | web crawl: 테이블, wiki
+주 7 | 10-16월 10-17화 | web crawl: 노래제목, 날씨, 댓글 (프로젝트 과제 1차)
+주 8 | 10-23월 10-24화 | 24일 시험 midterm, 23일 보강 (저장 file, jason, csv)
+주 9 | 10-30월 10-31화 | 열린데이터 api, save csv, nosql
 주 10 | 11-06월 11-07화 | spark rdd map-reduce 
 주 11 | 11-13월 11-14화 | spark dataframe sql
 주 12 | 11-20월 11-21화 | spark graph
 주 13 | 11-27월 11-28화 | spark ml
-주 14 | 12-04월 12-05화 | spark ml (project 2)
-주 15 | 12-11월 | final
+주 14 | 12-04월 12-05화 | spark ml (프로젝트 과제 2차)
+보강주 | 12-11월 | 보강
+주 15 | 12-18월 | 기말시험 final
 
 ## 과제
-* 빅데이터 과제를 제안하여, 완성한다.
-* 다음 일정에 따라 github에 제출한다.
+* 빅데이터 과제를 제안하여, 완성한다 (댓글 또는 열린데이터 사용)
+* 다음 일정에 따라 ecampus에 제출한다.
 
 주 | 기한 | 내용
 -----|-----|-----
-1차 | 6주 토요일 | 문제를 정하고, 어떤 데이터를 사용할 것인지. github에 제출
+1차 | 7주 토요일 | 문제를 정하고, 어떤 데이터를 사용할 것인지. ecampus에 제출
 2차 | 13주 토요일 | 전체 제출. 문서출력 및 github에 소스코드 제출. 14주차 발표.
 
 ## 참고문헌
+
 
