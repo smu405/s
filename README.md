@@ -2,7 +2,7 @@
 
 # 빅데이터 프로그래밍
 
-* 최종수정일 2017-10-10화, 보강 및 시험일자 수정
+* 최종수정일 20180307화
 
 ## 교과목 개요
 
@@ -32,22 +32,22 @@ Then the rest of the class will be spent on lab sessions for the students to app
 
 주 | 일자 | 내용
 -----|-----|-----
-주 1 | 9.04월 9.05화 | intro 환경 Python 소개 IPython, --(Numpy, Scipy, Matplotlib, Pandas, Scikit-learn)
-주 2 | 9.11월 9.12화 | web crawl html dom
-주 3 | 9.18월 9.19화 | web crawl --regex, beautifulSoup
-주 4 | 9.25월 9.26화 | web crawl --xpath, css
-주 5 | 10.02월 10.03화 | 추석휴강
-주 6 | 10.09월 10.10화 | 10.09추석휴강, 10.10web crawl: 테이블, wiki
-주 7 | 10.16월 10.17화 | web crawl: 노래제목, 날씨, 댓글 (프로젝트 과제 1차)
-주 8 | 10.23월 10.24화 | **23일 1차보강 (Selenium)**, 24일 시험 midterm 
-주 9 | 10.30월 10.31화 | 저장 file, json, --xml, csv, MongoDB
-주 10 | 11.06월 11.07화 | 저장 file, json, --xml, csv, MongoDB
-주 11 | 11.13월 11.14화 | **자습** 중간고사 풀이
-주 12 | 11.20월 11.21화 | 열린데이터 api
-주 13 | 11.27월 11.28화 | 열린데이터 api
-주 14 | 12.04월 12.05화 | spark rdd map-reduce
-보강주 | 12.11월 12.12화 | 보강 spark dataframe sql (12.12 프로젝트 2차 마감)
-주 15 | 12.18월 12.22금| 18일 보강, 22일 기말시험
+주 1 |  3.06화 | intro 환경 Python 소개 IPython, --(Numpy, Scipy, Matplotlib, Pandas, Scikit-learn)
+주 2 |  3.13화 | web crawl html dom
+주 3 |  3.20화 | web crawl --regex, beautifulSoup
+주 4 |  3.27화 | web crawl --xpath, css
+주 5 |  4.03화 | web crawl: 테이블, wiki 
+주 6 |  4.10화 | web crawl: 노래제목, 날씨, 댓글
+주 7 |  4.17화 | Selenium (프로젝트 과제 1차)
+주 8 |  4.24화 | 중간 시험 midterm 
+주 9 |  4.01화 | 저장 file, json, --xml, csv, MongoDB
+주 10 |  5.08화 | 저장 file, json, --xml, csv, MongoDB
+주 11 |  5.15화 | 열린데이터 api
+주 12 |  5.22화 | 석가탄신일
+주 13 |  5.29화 | 열린데이터 api
+주 14 |  6.05화 | spark rdd map-reduce
+보강주 |  6.12화 | spark dataframe sql (12.12 프로젝트 2차 마감)
+주 15 |  6.19금| 기말시험
 
 ## 과제
 * 빅데이터 과제를 제안하여, 완성한다 (댓글 또는 열린데이터 사용)
@@ -56,7 +56,7 @@ Then the rest of the class will be spent on lab sessions for the students to app
 주 | 기한 | 내용
 -----|-----|-----
 1차 | 7주 토요일 | 문제를 정하고, 어떤 데이터를 사용할 것인지. ecampus에 제출
-2차 | 보강주 12.12 화요일 | 전체 제출. 문서출력 및 ecampus에 소스코드 제출. 15주차 발표.
+2차 | 보강주 화요일 | 전체 제출. 문서출력 및 ecampus에 소스코드 제출. 15주차 발표.
 
 ## 참고문헌
 
