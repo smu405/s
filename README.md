@@ -30,10 +30,10 @@ Then the rest of the class will be spent on lab sessions for the students to app
 
 ## 주별 강의 (--는 범위에서 제외한다는 뜻)
 
-주 | 일자 | 내용
------|-----|-----
-주 1 |  9.06월 | intro 환경 Python 소개 IPython, --(Numpy, Scipy, Matplotlib, Pandas, Scikit-learn)
-주 2 |  9.10월 | web crawl html dom
+주 | 일자 | 내용 | 실제
+-----|-----|-----|-----
+주 1 |  9.06월 | intro 환경 Python 소개 IPython, --(Numpy, Scipy, Matplotlib, Pandas, Scikit-learn) | 소개
+주 2 |  9.10월 | web crawl html dom | Python
 주 3 |  9.17월 | web crawl --regex, beautifulSoup
 주 4 |  10.01월 | web crawl --xpath, css
 주 5 |  10.08월 | web crawl: 테이블, wiki 
