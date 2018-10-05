@@ -8,7 +8,7 @@
 ### M.1.1 목표
 
 * 사례별로 데이터를 분석하여 분류, 군집, 추천, 예측을 할 수 있다.
-
+---
 ### M.1.2 목차
 
 * M.1 IPython Notebook에서 SparkSession 생성하기
@@ -18,7 +18,7 @@
 * M.2.3 LDA
 * M.2.4 영화추천
 * M.2.5 분석 절차
-
+---
 
 ### M.1.3 문제 
 
@@ -37,7 +37,7 @@
     * KMeans
     * MDS Multi-Dimensional Scaling (MDS)
     * visualize
-
+---
 
 ## M.1 IPython Notebook에서 SparkSession 생성하기
 
