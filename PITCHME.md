@@ -72,12 +72,11 @@ mongod --dbpath ./data/
 
 ### M.2.1 구조적 데이터
 
-* Titanic case
-* kddcup99
+Titanic case, kddcup99
 
 ### M.2.2 텍스트 데이터
 
-* Kaggle Twitter US Airline Sentiment
+Kaggle Twitter US Airline Sentiment
 
 ### M.2.3 LDA
 
@@ -98,8 +97,7 @@ mongod --dbpath ./data/
 ---
 ## 문제 M-1: Titanic case
 
-* 오래 전 일어났던 Titanic 유람선 사고의 탑승객 가운데  
-* 1912년 4월 15일 사고, 2224명의 승객 및 선원 가운데 1502명이 사망
+* 1912년 4월 15일 Titanic 유람선 사고, 2224명의 승객 및 선원 가운데 1502명이 사망
 * 사망 여부의 2진 분류
 * Kaggle에 공개된 데이터
 ---
@@ -112,7 +110,7 @@ test.csv | 테스트 파일, 'Survived' 열의 값을 예측해야 한다.
 gender_submission.csv | 예측 결과 제출 파일 예제
 
 
-```python
+```text
 !ls data/kaggle/titanic/
 ```
 
@@ -127,12 +125,10 @@ _trainDf = spark.read.format('com.databricks.spark.csv')\
     .options(header='true', inferschema='true')\
     .load(os.path.join("data","kaggle","titanic","train.csv"))
 _trainDf.take(1)
-```
-
-
 
 
     [Row(PassengerId=1, Survived=0, Pclass=3, Name=u'Braund, Mr. Owen Harris', Sex=u'male', Age=22.0, SibSp=1, Parch=0, Ticket=u'A/5 21171', Fare=7.25, Cabin=u'', Embarked=u'S')]
+```
 
 ---
 
@@ -142,13 +138,13 @@ _testDf = spark.read.format('com.databricks.spark.csv')\
     .options(header='true', inferschema='true')\
     .load(os.path.join("data","kaggle","titanic","test.csv"))
 _testDf.take(1)
-```
 
 
 
 
     [Row(PassengerId=892, Pclass=3, Name=u'Kelly, Mr. James', Sex=u'male', Age=34.5, SibSp=0, Parch=0, Ticket=u'330911', Fare=7.8292, Cabin=u'', Embarked=u'Q')]
 
+```
 
 ---
 * 'Survived'는 'train.csv'에는 있으나, 'test.csv'에는 없다. 따라서 임의의 수 99를 넣는다.
@@ -166,7 +162,7 @@ _testDf = _testDf.withColumn('Survived',lit(99))
 * union
     * DataFrame을 합치는 기능
     * 두 DataFrame의 컬럼 수와 데이터타잎이 일치해야 한다. 순서가 다르더라도 그냥 합치는 것에 주의한다.
----
+
 * Sql의 union은 컬럼명을 고려하지 않고 컬럼수만 동일하면 합쳐준다.
     * 별도 추가된 'Survived'열이 맨 뒤에 위치하게 되고, 다른 열과 합쳐지게 된다.
     * 컬럼명을 모두 적어주어 해결한다.
@@ -174,7 +170,6 @@ _testDf = _testDf.withColumn('Survived',lit(99))
 
 ```python
 _trainDf.printSchema()
-```
 
     root
      |-- PassengerId: integer (nullable = true)
@@ -191,12 +186,12 @@ _trainDf.printSchema()
      |-- Embarked: string (nullable = true)
      |-- testOrtrain: string (nullable = false)
     
+```
 ---
 
 
 ```python
 _testDf.printSchema()
-```
 
     root
      |-- PassengerId: integer (nullable = true)
@@ -213,6 +208,7 @@ _testDf.printSchema()
      |-- testOrtrain: string (nullable = false)
      |-- Survived: integer (nullable = false)
     
+```
 ---
 
 
@@ -229,17 +225,12 @@ df=_trainDf.select('PassengerId','Survived','Pclass','Name','Sex','Age',\
                    'SibSp','Parch','Ticket','Fare','Cabin','Embarked','testOrtrain'))
 ```
 ---
-* test 또는 train선택
-filter(condition)
-Filters rows using the given condition.
+* test 또는 train선택 filter(condition)
+* where() is an alias for filter().
 
-where() is an alias for filter().
-
----
 ```python
 df.select('testOrtrain','Survived','Name')\
     .filter(df['testOrtrain']=='test').show(10)
-```
 
     +-----------+--------+--------------------+
     |testOrtrain|Survived|                Name|
@@ -256,13 +247,13 @@ df.select('testOrtrain','Survived','Name')\
     |       test|      99|Davies, Mr. John ...|
     +-----------+--------+--------------------+
     only showing top 10 rows
+```
     
 ---
 
 
 ```python
 df.groupBy(df.testOrtrain).count().show()
-```
 
     +-----------+-----+
     |testOrtrain|count|
@@ -270,6 +261,7 @@ df.groupBy(df.testOrtrain).count().show()
     |      train|  891|
     |       test|  418|
     +-----------+-----+
+```
     
 ---
 
