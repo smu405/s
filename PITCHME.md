@@ -53,7 +53,7 @@ os.environ["PYLIB"]=os.path.join(os.environ["SPARK_HOME"],'python','lib')
 sys.path.insert(0,os.path.join(os.environ["PYLIB"],'py4j-0.10.1-src.zip'))
 sys.path.insert(0,os.path.join(os.environ["PYLIB"],'pyspark.zip'))
 ```
-
+---
 SparkSession에 필요한 설정을 넣어서 만들어 준다.
 SparkSession은 getOrCreate()로 이미 만들어져 있으면 현재 것을, 없으면 생성하는 방식을 취하고 있다.
 
@@ -67,14 +67,14 @@ spark = pyspark.sql.SparkSession.builder\
     .config(conf=myConf)\
     .getOrCreate()
 ```
-
+---
 Mongo DB를 사용하기 위해서는 실행시켜 준비해 놓는다.
 
 * mongo daemon
 ```
 mongod --dbpath ./data/
 ```
-
+---
 ## M.2 사례
 
 다음 사례를 기계학습으로 풀어보기로 한다.
@@ -95,7 +95,7 @@ mongod --dbpath ./data/
 ### M.2.4 영화추천
 
 자신의 선호에 따른 영화를 추천하는 기계학습이다.
-
+---
 ### M.2.5 분석 절차
 
 * 1 단계: 데이터 수집
@@ -105,14 +105,14 @@ mongod --dbpath ./data/
 * 5 단계: 평가 - 평가 및 모델의 개선
     * n-folding cross-validation
 
-
+---
 ## 문제 M-1: Titanic case
 
 * 오래 전 일어났던 Titanic 유람선 사고의 탑승객 가운데  
 * 1912년 4월 15일 사고, 2224명의 승객 및 선원 가운데 1502명이 사망
 * 사망 여부의 2진 분류
 * Kaggle에 공개된 데이터
-
+---
 ### M-1.1 데이터 수집
 
 파일 | 설명
@@ -128,7 +128,7 @@ gender_submission.csv | 예측 결과 제출 파일 예제
 
     gender_submission.csv  test.csv  train.csv
 
-
+---
 * 'train.csv'와 'test.csv'를 합쳐서 하나의 파일로 만든다.
 
 
