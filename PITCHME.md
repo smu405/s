@@ -1,12 +1,10 @@
 # Spark ML
 
-* Last updated 20181005FRI1030 20170425 20161125
-
 ## M.1 학습내용
 
 ### M.1.1 목표
 
-* 사례별로 데이터를 분석하여 분류, 군집, 추천, 예측을 할 수 있다.
+* 사례별로 데이터를 분석하여 분류, 군집, 추천, 예측
 ---
 ### M.1.2 목차
 
@@ -24,18 +22,12 @@
 * 문제 M-1: Titanic case
 * 문제 M-2: Kaggle Twitter US Airline Sentiment
 * 문제 M-3: Spark MLib Decision Tree for kddcup99
-    * chi = Statistics.chiSqTest(training_data_categorical)
 * 문제 M-4: LDA 
 * 문제 M-5: Spark MLib movie recommendation 사례
 * 문제 M-6: Ethereum
 * 문제 M-7: Spark Streaming
 * 문제 M-8: GraphX
 * spark-submit (self-contained app in quick-start 참조) 
-
-* 연습
-    * KMeans
-    * MDS Multi-Dimensional Scaling (MDS)
-    * visualize
 ---
 
 ## M.1 IPython Notebook에서 SparkSession 생성하기
@@ -68,9 +60,8 @@ spark = pyspark.sql.SparkSession.builder\
     .getOrCreate()
 ```
 ---
-Mongo DB를 사용하기 위해서는 실행시켜 준비해 놓는다.
-
-* mongo daemon
+Mongo DB를 사용하기 위해서는 실행시켜 준비해 놓는다.  Mongo daemon은 다음과
+같이 실행한다.
 ```
 mongod --dbpath ./data/
 ```
@@ -103,7 +94,6 @@ mongod --dbpath ./data/
 * 3 단계: 모델링
 * 4 단계: 예측
 * 5 단계: 평가 - 평가 및 모델의 개선
-    * n-folding cross-validation
 
 ---
 ## 문제 M-1: Titanic case
@@ -144,7 +134,7 @@ _trainDf.take(1)
 
     [Row(PassengerId=1, Survived=0, Pclass=3, Name=u'Braund, Mr. Owen Harris', Sex=u'male', Age=22.0, SibSp=1, Parch=0, Ticket=u'A/5 21171', Fare=7.25, Cabin=u'', Embarked=u'S')]
 
-
+---
 
 
 ```python
@@ -160,7 +150,7 @@ _testDf.take(1)
     [Row(PassengerId=892, Pclass=3, Name=u'Kelly, Mr. James', Sex=u'male', Age=34.5, SibSp=0, Parch=0, Ticket=u'330911', Fare=7.8292, Cabin=u'', Embarked=u'Q')]
 
 
-
+---
 * 'Survived'는 'train.csv'에는 있으나, 'test.csv'에는 없다. 따라서 임의의 수 99를 넣는다.
     * pyspark.sql.functions.lit(col) 컬럼에 값을 넣어 열을 생성하는 기능
 
@@ -172,15 +162,15 @@ _trainDf = _trainDf.withColumn('testOrtrain',lit('train'))
 _testDf = _testDf.withColumn('testOrtrain',lit('test'))
 _testDf = _testDf.withColumn('Survived',lit(99))
 ```
-
+---
 * union
     * DataFrame을 합치는 기능
     * 두 DataFrame의 컬럼 수와 데이터타잎이 일치해야 한다. 순서가 다르더라도 그냥 합치는 것에 주의한다.
-
+---
 * Sql의 union은 컬럼명을 고려하지 않고 컬럼수만 동일하면 합쳐준다.
     * 별도 추가된 'Survived'열이 맨 뒤에 위치하게 되고, 다른 열과 합쳐지게 된다.
     * 컬럼명을 모두 적어주어 해결한다.
-
+---
 
 ```python
 _trainDf.printSchema()
@@ -201,7 +191,7 @@ _trainDf.printSchema()
      |-- Embarked: string (nullable = true)
      |-- testOrtrain: string (nullable = false)
     
-
+---
 
 
 ```python
@@ -223,14 +213,14 @@ _testDf.printSchema()
      |-- testOrtrain: string (nullable = false)
      |-- Survived: integer (nullable = false)
     
-
+---
 
 
 ```python
 for c in _trainDf.columns:
     print c,
 ```
-
+---
 
 ```python
 df=_trainDf.select('PassengerId','Survived','Pclass','Name','Sex','Age',\
@@ -238,14 +228,14 @@ df=_trainDf.select('PassengerId','Survived','Pclass','Name','Sex','Age',\
             .union(_testDf.select('PassengerId','Survived','Pclass','Name','Sex','Age',\
                    'SibSp','Parch','Ticket','Fare','Cabin','Embarked','testOrtrain'))
 ```
-
+---
 * test 또는 train선택
 filter(condition)
 Filters rows using the given condition.
 
 where() is an alias for filter().
 
-
+---
 ```python
 df.select('testOrtrain','Survived','Name')\
     .filter(df['testOrtrain']=='test').show(10)
@@ -267,7 +257,7 @@ df.select('testOrtrain','Survived','Name')\
     +-----------+--------+--------------------+
     only showing top 10 rows
     
-
+---
 
 
 ```python
@@ -281,21 +271,21 @@ df.groupBy(df.testOrtrain).count().show()
     |       test|  418|
     +-----------+-----+
     
-
+---
 
 ### M-1.2 데이터 변환
 
 * 데이터 확인 - outlier, missing
 * 데이터 변환
     * non-numeric: 'Sex', 'Embarked'
-
+---
 ### M-1.2.1 outlier
 
 * 데이터에 outlier가 있는지
 
 
 rdd.filter(lambda x:math.fabs(x-mean) < 3*stddev)
-
+---
 ### M-1.2.2 Missing 데이터의 처리
 * missing, not null이 있는지
 
@@ -303,7 +293,7 @@ rdd.filter(lambda x:math.fabs(x-mean) < 3*stddev)
     * aggregate함수 'avg', 'max', 'min', 'sum', 'count' 기능을 사용할 수 있다.
     * dict로 key, value
 * 갯수를 세어보면, 'Age'와 'Fare'에 missing 값이 있다는 것을 알 수 있다.
-
+---
 
 ```python
 from pyspark.sql.functions import count
@@ -316,7 +306,7 @@ df.agg(*[count(c).alias(c) for c in df.columns]).show()
     |       1309|    1309|  1309|1309|1309|1046| 1309| 1309|  1309|1308| 1309|    1309|       1309|
     +-----------+--------+------+----+----+----+-----+-----+------+----+-----+--------+-----------+
     
-
+---
 
 
 ```python
@@ -329,7 +319,7 @@ print missing
 
     {'Fare': 1, 'Age': 263, 'SibSp': 0, 'Survived': 0, 'Parch': 0}
 
-
+---
 
 ```python
 print df.filter("Age is null").show(5)
@@ -355,7 +345,7 @@ print df.filter("Fare is null").show(5)
     +-----------+--------+------+------------------+----+----+-----+-----+------+----+-----+--------+-----------+
     
     None
-
+---
 
 * 평균구하기
     * collect()의 결과는 Python List이므로, index '0', 컬럼명으로 평균값을 구할 수 있다.
@@ -373,7 +363,7 @@ print avgFare[0]['meanFare']
     29.8811376673
     33.2954792813
 
-
+---
 
 ```python
 print df.groupBy().mean('Age').first()
@@ -383,7 +373,7 @@ print df.groupBy().mean('Fare').first()
     Row(avg(Age)=29.881137667304014)
     Row(avg(Fare)=33.29547928134553)
 
-
+---
 
 ```python
 df.describe(['Age']).show()
@@ -399,7 +389,7 @@ df.describe(['Age']).show()
     |    max|              80.0|
     +-------+------------------+
     
-
+---
 
 * null 값의 처리
     * 
@@ -409,7 +399,7 @@ df.describe(['Age']).show()
 ```
 df4.na.fill({'age': 50, 'name': 'unknown'}).show()
 ```
-
+---
 
 ```python
 from pyspark.sql.functions import when,isnull
@@ -417,7 +407,7 @@ df=df.withColumn("Age", when(isnull(df['Age']), avgAge[0]['meanAge']).otherwise(
 df=df.withColumn("Fare", when(isnull(df['Fare']), avgFare[0]['meanFare']).otherwise(df.Fare))
 #df.show(10)
 ```
-
+---
 
 ```python
 df.groupBy('testOrtrain').count().show()
@@ -431,7 +421,7 @@ df.groupBy('testOrtrain').count().show()
     +-----------+-----+
     
 
-
+---
 
 ```python
 df.groupBy('Sex').count().show()
@@ -444,7 +434,7 @@ df.groupBy('Sex').count().show()
     |  male|  843|
     +------+-----+
     
-
+---
 
 * 이름으로 성별을 구별해 본다.
 * 이름name에 학위 (Master, Dr.), 작위 등이 성별title 대신 사용된 경우가 있슴.
@@ -474,7 +464,7 @@ for n in names:
     female
     female
     None
-
+---
 
 
 ```python
@@ -518,7 +508,7 @@ df.groupBy('Sex').count().show()
     |  male|  843|
     +------+-----+
     
-
+---
 
 
 ```python
