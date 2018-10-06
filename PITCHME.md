@@ -1,5 +1,7 @@
 # Spark ML
 
+온라인 슬라이드 https://gitpitch.com/smu405/s
+
 ## M.1 학습내용
 
 ### M.1.1 목표
@@ -1105,9 +1107,9 @@ _tDf.agg(*[count(c).alias(c) for c in _tDf.columns]).show()
 
 패턴 | 설명
 -----|-----
-@[\w]+ | @로 시작하는 alphanumerics
-[^\w] | alphanumeric이 아닌 한 글자, apostrophe, dot, etc.
-\w+:\/\/\S+ | ://를 가지고 있는 url
+```@[\w]+``` | '@로' 시작하는 alphanumerics
+```[^\w]``` | alphanumeric이 아닌 한 글자, apostrophe, dot, etc.
+```\w+:\/\/\S+``` | '://'를 가지고 있는 url
 
 ---
 
