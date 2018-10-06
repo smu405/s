@@ -189,7 +189,6 @@ _trainDf.printSchema()
 ```
 ---
 
-
 ```python
 _testDf.printSchema()
 
@@ -275,11 +274,13 @@ df.groupBy(df.testOrtrain).count().show()
 
 * 데이터에 outlier가 있는지
 
-
+```python
 rdd.filter(lambda x:math.fabs(x-mean) < 3*stddev)
+```
 ---
 ### M-1.2.2 Missing 데이터의 처리
-* missing, not null이 있는지
+
+* missing, not null이 있는지 확인
 
 * agg()는 
     * aggregate함수 'avg', 'max', 'min', 'sum', 'count' 기능을 사용할 수 있다.
@@ -290,13 +291,13 @@ rdd.filter(lambda x:math.fabs(x-mean) < 3*stddev)
 ```python
 from pyspark.sql.functions import count
 df.agg(*[count(c).alias(c) for c in df.columns]).show()
-```
 
     +-----------+--------+------+----+----+----+-----+-----+------+----+-----+--------+-----------+
     |PassengerId|Survived|Pclass|Name| Sex| Age|SibSp|Parch|Ticket|Fare|Cabin|Embarked|testOrtrain|
     +-----------+--------+------+----+----+----+-----+-----+------+----+-----+--------+-----------+
     |       1309|    1309|  1309|1309|1309|1046| 1309| 1309|  1309|1308| 1309|    1309|       1309|
     +-----------+--------+------+----+----+----+-----+-----+------+----+-----+--------+-----------+
+```
     
 ---
 
@@ -307,16 +308,15 @@ def countNull(df,var):
 missing = {c: countNull(df,c) for c in ['Survived','Age','SibSp','Parch','Fare']}
 
 print missing
-```
 
     {'Fare': 1, 'Age': 263, 'SibSp': 0, 'Survived': 0, 'Parch': 0}
+```
 
 ---
 
 ```python
 print df.filter("Age is null").show(5)
 print df.filter("Fare is null").show(5)
-```
 
     +-----------+--------+------+--------------------+------+----+-----+-----+------+------+-----+--------+-----------+
     |PassengerId|Survived|Pclass|                Name|   Sex| Age|SibSp|Parch|Ticket|  Fare|Cabin|Embarked|testOrtrain|
@@ -329,14 +329,13 @@ print df.filter("Fare is null").show(5)
     +-----------+--------+------+--------------------+------+----+-----+-----+------+------+-----+--------+-----------+
     only showing top 5 rows
     
-    None
     +-----------+--------+------+------------------+----+----+-----+-----+------+----+-----+--------+-----------+
     |PassengerId|Survived|Pclass|              Name| Sex| Age|SibSp|Parch|Ticket|Fare|Cabin|Embarked|testOrtrain|
     +-----------+--------+------+------------------+----+----+-----+-----+------+----+-----+--------+-----------+
     |       1044|      99|     3|Storey, Mr. Thomas|male|60.5|    0|    0|  3701|null|     |       S|       test|
     +-----------+--------+------+------------------+----+----+-----+-----+------+----+-----+--------+-----------+
+```
     
-    None
 ---
 
 * 평균구하기
@@ -350,26 +349,24 @@ avgFare=df.agg(F.avg(df['Fare']).alias('meanFare')).collect()
 print avgAge[0]['meanAge']
 print avgFare[0]['meanFare']
 
-```
-
     29.8811376673
     33.2954792813
+```
 
 ---
 
 ```python
 print df.groupBy().mean('Age').first()
 print df.groupBy().mean('Fare').first()
-```
 
     Row(avg(Age)=29.881137667304014)
     Row(avg(Fare)=33.29547928134553)
+```
 
 ---
 
 ```python
 df.describe(['Age']).show()
-```
 
     +-------+------------------+
     |summary|               Age|
@@ -380,6 +377,7 @@ df.describe(['Age']).show()
     |    min|              0.17|
     |    max|              80.0|
     +-------+------------------+
+```
     
 ---
 
@@ -403,7 +401,6 @@ df=df.withColumn("Fare", when(isnull(df['Fare']), avgFare[0]['meanFare']).otherw
 
 ```python
 df.groupBy('testOrtrain').count().show()
-```
 
     +-----------+-----+
     |testOrtrain|count|
@@ -411,13 +408,13 @@ df.groupBy('testOrtrain').count().show()
     |      train|  891|
     |       test|  418|
     +-----------+-----+
+```
     
 
 ---
 
 ```python
 df.groupBy('Sex').count().show()
-```
 
     +------+-----+
     |   Sex|count|
@@ -425,6 +422,7 @@ df.groupBy('Sex').count().show()
     |female|  466|
     |  male|  843|
     +------+-----+
+```
     
 ---
 
@@ -449,15 +447,14 @@ names=["Braund, Mr. Owen Harris",
        "No title"]
 for n in names:
     print getTitle(n)
-```
 
     male
     female
     female
     female
     None
+```
 ---
-
 
 ```python
 from pyspark.sql.functions import udf
@@ -472,7 +469,6 @@ df.select('testOrtrain','Name','Title','Sex')\
     .show(5,truncate=False)
 df.groupBy('Title').count().show()
 df.groupBy('Sex').count().show()
-```
 
     +-----------+--------------------------------------------+------+------+
     |testOrtrain|Name                                        |Title |Sex   |
@@ -499,13 +495,13 @@ df.groupBy('Sex').count().show()
     |female|  466|
     |  male|  843|
     +------+-----+
+```
     
 ---
 
 
 ```python
 df.printSchema()
-```
 
     root
      |-- PassengerId: integer (nullable = true)
@@ -521,20 +517,20 @@ df.printSchema()
      |-- Cabin: string (nullable = true)
      |-- Embarked: string (nullable = true)
      |-- testOrtrain: string (nullable = false)
+```
     
 
-
+---
 
 ```python
 df=df.withColumn("SurvivedD",trainDf['Survived']\
     .cast("double"))\
     .drop('Survived')
 ```
-
+---
 
 ```python
 df.groupBy('SurvivedD').count().show()
-```
 
     +---------+-----+
     |SurvivedD|count|
@@ -543,7 +539,8 @@ df.groupBy('SurvivedD').count().show()
     |      1.0|  342|
     |     99.0|  418|
     +---------+-----+
-    
+```
+---    
 
 
 
@@ -563,11 +560,10 @@ pipeline = Pipeline(stages=[PclassIndexer,SexIndexer,ParchIndexer,\
 model = pipeline.fit(df)
 myDf = model.transform(df)
 ```
-
+---
 
 ```python
 myDf.select('SurvivedD','features').show(10)
-```
 
     +---------+--------------------+
     |SurvivedD|            features|
@@ -584,8 +580,9 @@ myDf.select('SurvivedD','features').show(10)
     |      1.0|[2.0,1.0,14.0,1.0...|
     +---------+--------------------+
     only showing top 10 rows
+```
     
-
+---
 
 * randomSplit()
 Randomly splits this DataFrame with the provided weights.
@@ -600,20 +597,19 @@ print "all num of rows: ",myDf.count()
 print 'train num of rows: ',trainDf.count()
 print 'validate num of rows: ',validateDf.count()
 print 'test num of rows: ',testDf.count()
-```
 
     all num of rows:  1309
     train num of rows:  628
     validate num of rows:  263
     test num of rows:  418
-
+```
+---
 
 ### M-1.3 모델링
 
 #### LogisticRegression
 
-* 이진 분류인지?
-
+이진 분류
 
 ```python
 from pyspark.ml.classification import LogisticRegression
@@ -627,35 +623,39 @@ lr = LogisticRegression().\
     setElasticNetParam(0.)
 lrModel=lr.fit(trainDf)
 ```
+---
 
 ####  dt, rf
 
+```python
 dt = DecisionTreeClassifier(maxDepth = 3, labelCol ='index').fit(train)
 rf = RandomForestClassifier(numTrees = 100, labelCol = 'index').fit(train)
- 
-
+```
+---
 ### M-1.4 예측
 
 ### M-1.5 평가
 
 * testDF를 만들어서
 * 이진분류의 경우
+
+구분 | 설명
+-----|-----
 rawPrediction | 이진분류 예측 또는 확률, double 또는 벡터
 label | 실제 값
 
 . The rawPrediction column can be of type double (binary 0/1 prediction, or probability of label 1) or of type vector (length-2 vector of raw predictions, scores, or label probabilities).
-
+---
 
 ```python
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
 
 lrDf = lrModel.transform(validateDf)
 ```
-
+---
 
 ```python
 lrDf.printSchema()
-```
 
     root
      |-- PassengerId: integer (nullable = true)
@@ -682,12 +682,12 @@ lrDf.printSchema()
      |-- probability: vector (nullable = true)
      |-- prediction: double (nullable = true)
     
-
+```
+---
 
 
 ```python
 lrDf.select('SurvivedD','rawPrediction','probability','prediction').show()
-```
 
     +---------+--------------------+--------------------+----------+
     |SurvivedD|       rawPrediction|         probability|prediction|
@@ -714,38 +714,41 @@ lrDf.select('SurvivedD','rawPrediction','probability','prediction').show()
     |      1.0|[0.86052411729901...|[0.70277014583679...|       0.0|
     +---------+--------------------+--------------------+----------+
     only showing top 20 rows
+```
     
-
+---
 
 
 ```python
 evaluator = BinaryClassificationEvaluator(rawPredictionCol = 'prediction',\
                                           labelCol='SurvivedD')
 evaluator.evaluate(lrDf)
-```
 
 
 
 
     0.7919513103962241
 
+```
 
-
+---
 * ROC
 
-val nbMetricsCats = new BinaryClassificationMetrics(nbPredictionsVsTr
-   ueCats)
+```
+val nbMetricsCats = new BinaryClassificationMetrics(nbPredictionsVsTr ueCats)
    val nbPrCats = nbMetricsCats.areaUnderPR
    val nbRocCats = nbMetricsCats.areaUnderRO
-
+```
+---
 * 개선
     * feature standardization
-    
-    val matrix = new RowMatrix(vectors)
-   val matrixSummary = matrix.computeColumnSummaryStatistics()
-val scaler = new StandardScaler(withMean = true, withStd =
-   true).fit(vectors)
 
+```    
+val matrix = new RowMatrix(vectors)
+val matrixSummary = matrix.computeColumnSummaryStatistics()
+val scaler = new StandardScaler(withMean = true, withStd = true).fit(vectors)
+```
+---
 ## 문제 M-2: Kaggle Twitter US Airline Sentiment
 
 * 원본 https://www.crowdflower.com/data-for-everyone/
@@ -756,6 +759,7 @@ val scaler = new StandardScaler(withMean = true, withStd =
 
 * 압축을 풀면, 
      Tweets.csv와 database.sqlite 2 파일이 생성, 동일한 내용
+---
 
 * sqlite
 ```
@@ -765,7 +769,7 @@ Enter ".help" for usage hints.
 sqlite> .table
 Tweets
 ```
-
+---
 * 14485 'negativereason_confidence' 제외한 건수
 
 * ibm직원이 tweet을 변환해서 mlib한 거 https://github.com/castanan/w2v
@@ -775,13 +779,15 @@ Tweets
 데이터 행 | 14485
 데이터 열 | 15 tweet_id, airline_sentiment, airline_sentiment_confidence, negativereason, negativereason_confidence, airline, airline_sentiment_gold, name, negativereason_gold, retweet_count, text, tweet_coord, tweet_created, tweet_location, user_timezone
 
+---
+
 1. 데이터 수집해서 dataframe.
 * url, RT, punctuations, numbers, lowercase, emoticons
 2. stop words
 tokenize
 tf-idf
 
-
+---
 ### M-2.1 데이터 수집
 
 #### Tweets.csv
