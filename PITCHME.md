@@ -845,6 +845,7 @@ tDf.select('text', 'airline_sentiment_confidence',\
           'negativereason_confidence').show(10)
 ```
 
+```text
     +--------------------+----------------------------+-------------------------+
     |                text|airline_sentiment_confidence|negativereason_confidence|
     +--------------------+----------------------------+-------------------------+
@@ -860,8 +861,9 @@ tDf.select('text', 'airline_sentiment_confidence',\
     |@VirginAmerica it...|                         1.0|                         |
     +--------------------+----------------------------+-------------------------+
     only showing top 10 rows
-    
+```
 
+---
 
 #### sqlite database.sqlite
 
@@ -875,11 +877,13 @@ _df=spark.read.format('jdbc')\
     ).load()
 ```
 
+---
 
 ```python
 _df.printSchema()
 ```
 
+```text
     root
      |-- tweet_id: integer (nullable = false)
      |-- airline_sentiment: string (nullable = true)
@@ -897,7 +901,9 @@ _df.printSchema()
      |-- tweet_location: string (nullable = true)
      |-- user_timezone: string (nullable = true)
     
+```
 
+---
 
 ### M-2.2 데이터 변환
 
@@ -910,9 +916,12 @@ _df.printSchema()
 ```python
 print tDf.groupBy('airline_sentiment').count().show()
 print tDf.groupBy('airline')\
-    .agg({'airline_sentiment': 'count'}).show()
+   .agg({'airline_sentiment': 'count'}).show()
 ```
 
+---
+
+```text
     +--------------------+-----+
     |   airline_sentiment|count|
     +--------------------+-----+
@@ -943,8 +952,9 @@ print tDf.groupBy('airline')\
     +--------------+------------------------+
     
     None
+```
 
-
+---
 
 ```python
 print _df.groupBy('airline_sentiment').count().show()
@@ -952,6 +962,7 @@ print _df.groupBy('airline')\
     .agg({'airline_sentiment': 'count'}).show()
 ```
 
+```text
     +-----------------+-----+
     |airline_sentiment|count|
     +-----------------+-----+
@@ -960,7 +971,6 @@ print _df.groupBy('airline')\
     |         negative| 9082|
     +-----------------+-----+
     
-    None
     +--------------+------------------------+
     |       airline|count(airline_sentiment)|
     +--------------+------------------------+
@@ -972,8 +982,9 @@ print _df.groupBy('airline')\
     |      American|                    2604|
     +--------------+------------------------+
     
-    None
+```
 
+---
 
 
 ```python
@@ -985,6 +996,7 @@ sDf=(_df.groupBy('airline_sentiment').count()
 sDf.show()
 ```
 
+```text
     +-----------------+-----+-----+-------------------+
     |airline_sentiment|count|total|           fraction|
     +-----------------+-----+-----+-------------------+
@@ -992,10 +1004,12 @@ sDf.show()
     |          neutral| 3069|14485|0.21187435277873662|
     |         negative| 9082|14485| 0.6269934414911978|
     +-----------------+-----+-----+-------------------+
-    
+```
+
+---
 
 
-* 비율로 그림?
+* 비율 그래프
 
 
 ```python
@@ -1006,6 +1020,9 @@ _df.stat.crosstab("airline","airline_sentiment").show()
 _df.groupBy('negativereason').count().show()
 ```
 
+---
+
+```text
     +-------------------------+--------+-------+--------+
     |airline_airline_sentiment|negative|neutral|positive|
     +-------------------------+--------+-------+--------+
@@ -1033,8 +1050,9 @@ _df.groupBy('negativereason').count().show()
     |Flight Booking Pr...|  523|
     +--------------------+-----+
     
+```
 
-
+---
 * 'tweet_location', 'retweet_count' 분석 - 비율, 지도위에??
 
 * DateType()은 년월일 형식을 지원 "0001-01-01" through "9999-12-31".
@@ -1048,6 +1066,7 @@ _df.groupBy('negativereason').count().show()
 airline_sentiment_confidence | 1~0의 값, 소수점 18자리까지 | null 값이 거의 없다.
 negativereason_confidence | 상동 | null 값이 많다.
 
+---
 
 ```python
 from pyspark.sql.types import IntegerType, DateType, DoubleType, DecimalType, FloatType
@@ -1064,19 +1083,23 @@ _tDf=_tDf.withColumn('tweet_createdDate', _tDf['tweet_created']\
 _tDf=_tDf.drop('negativereason_confidenceD')
 ```
 
+---
 
 ```python
 from pyspark.sql.functions import count
 _tDf.agg(*[count(c).alias(c) for c in _tDf.columns]).show()
 ```
 
+```text
     +--------+-----------------+--------------+-------+----------------------+-----+-------------------+-------------+-----+-----------+--------------+-------------+-----------------------------+-----------------+
     |tweet_id|airline_sentiment|negativereason|airline|airline_sentiment_gold| name|negativereason_gold|retweet_count| text|tweet_coord|tweet_location|user_timezone|airline_sentiment_confidenceD|tweet_createdDate|
     +--------+-----------------+--------------+-------+----------------------+-----+-------------------+-------------+-----+-----------+--------------+-------------+-----------------------------+-----------------+
     |   14485|            14485|         14485|  14485|                 14485|14485|              14485|        14485|14485|      14485|         14485|        14485|                        14485|            14485|
     +--------+-----------------+--------------+-------+----------------------+-----+-------------------+-------------+-----+-----------+--------------+-------------+-----------------------------+-----------------+
     
+```
 
+---
 
 * 가려내기
 
@@ -1086,6 +1109,7 @@ _tDf.agg(*[count(c).alias(c) for c in _tDf.columns]).show()
 [^\w] | alphanumeric이 아닌 한 글자, apostrophe, dot, etc.
 \w+:\/\/\S+ | ://를 가지고 있는 url
 
+---
 
 ```python
 from pyspark.sql.functions import udf
@@ -1097,7 +1121,7 @@ def myFilter(s):
 myUdf = udf(myFilter, StringType())
 filterDF = _tDf.withColumn("textFiltered", myUdf(_tDf['text']))
 ```
-
+---
 
 ```python
 from pyspark.ml.feature import *
@@ -1110,14 +1134,17 @@ wordsDf=re.transform(filterDF)
 wordsDf.select('text','words').take(3)
 ```
 
+---
 
-
+```text
 
     [Row(text=u"@JetBlue's new CEO seeks the right balance to please passengers and Wall ... - Greenfield Daily Reporter http://t.co/LM3opxkxch", words=[u's', u'new', u'ceo', u'seeks', u'the', u'right', u'balance', u'to', u'please', u'passengers', u'and', u'wall', u'greenfield', u'daily', u'reporter']),
      Row(text=u'@JetBlue is REALLY getting on my nerves !! \U0001f621\U0001f621 #nothappy', words=[u'is', u'really', u'getting', u'on', u'my', u'nerves', u'nothappy']),
      Row(text=u'@united yes. We waited in line for almost an hour to do so. Some passengers just left not wanting to wait past 1am.', words=[u'yes', u'we', u'waited', u'in', u'line', u'for', u'almost', u'an', u'hour', u'to', u'do', u'so', u'some', u'passengers', u'just', u'left', u'not', u'wanting', u'to', u'wait', u'past', u'1am'])]
 
+```
 
+---
 
 
 ```python
@@ -1142,14 +1169,22 @@ for e in _mystopwords:
 print stopwords
 ```
 
+---
+
+```text
     [u'i', u'me', u'my', u'myself', u'we', u'our', u'ours', u'ourselves', u'you', u'your', u'yours', u'yourself', u'yourselves', u'he', u'him', u'his', u'himself', u'she', u'her', u'hers', u'herself', u'it', u'its', u'itself', u'they', u'them', u'their', u'theirs', u'themselves', u'what', u'which', u'who', u'whom', u'this', u'that', u'these', u'those', u'am', u'is', u'are', u'was', u'were', u'be', u'been', u'being', u'have', u'has', u'had', u'having', u'do', u'does', u'did', u'doing', u'a', u'an', u'the', u'and', u'but', u'if', u'or', u'because', u'as', u'until', u'while', u'of', u'at', u'by', u'for', u'with', u'about', u'against', u'between', u'into', u'through', u'during', u'before', u'after', u'above', u'below', u'to', u'from', u'up', u'down', u'in', u'out', u'on', u'off', u'over', u'under', u'again', u'further', u'then', u'once', u'here', u'there', u'when', u'where', u'why', u'how', u'all', u'any', u'both', u'each', u'few', u'more', u'most', u'other', u'some', u'such', u'no', u'nor', u'not', u'only', u'own', u'same', u'so', u'than', u'too', u'very', u's', u't', u'can', u'will', u'just', u'don', u'should', u'now', u'd', u'll', u'm', u'o', u're', u've', u'y', u'ain', u'aren', u'couldn', u'didn', u'doesn', u'hadn', u'hasn', u'haven', u'isn', u'ma', u'mightn', u'mustn', u'needn', u'shan', u'shouldn', u'wasn', u'weren', u'won', u'wouldn', u'\ub098', u'\ub108', u'\uc6b0\ub9ac']
 
+```
+
+---
 
 
 ```python
 stopDf=stop.transform(wordsDf)
 stopDf.select('text','nostops').show()
 ```
+
+```text
 
     +--------------------+--------------------+
     |                text|             nostops|
@@ -1177,7 +1212,9 @@ stopDf.select('text','nostops').show()
     +--------------------+--------------------+
     only showing top 20 rows
     
+```
 
+---
 
 
 ```python
@@ -1189,6 +1226,8 @@ cvDf = cvModel.transform(wordsDf)
 cvDf.collect()
 cvDf.select('text','words','cv').show()
 ```
+
+```text
 
     +--------------------+--------------------+--------------------+
     |                text|               words|                  cv|
@@ -1216,7 +1255,9 @@ cvDf.select('text','words','cv').show()
     +--------------------+--------------------+--------------------+
     only showing top 20 rows
     
+```
 
+---
 
 ### M-2.3 모델링
 
@@ -1224,7 +1265,7 @@ cvDf.select('text','words','cv').show()
 
 * multiclass
 
-
+---
 
 ## 문제 M-3: Spark MLib Decision Tree
 
@@ -1236,18 +1277,17 @@ cvDf.select('text','words','cv').show()
 * 4단계: 예측
 * 5단계: 평가
 
+---
+
 ### 1단계: 데이터 수집
 
 http://kdd.ics.uci.edu/databases/kddcup99/kddcup99.html
-This is the data set used for The Third International Knowledge Discovery and Data Mining Tools Competition, which was held in conjunction with KDD-99 The Fifth International Conference on Knowledge Discovery and Data Mining. The competition task was to build a network intrusion detector, a predictive model capable of distinguishing between ``bad'' connections, called intrusions or attacks, and ``good'' normal connections. This database contains a standard set of data to be audited, which includes a wide variety of intrusions simulated in a military network environment.
-
 
 * url에서 데이터를 내려받는다.
 * data 디렉토리에 저장한다.
 * 데이터를 내려 받아 놓았다면, 반복하지 않고 있는 파일을 읽는다.
 
-* train data
-
+---
 
 ```python
 import os
@@ -1260,27 +1300,29 @@ if(not os.path.exists(_trainFn)):
     _trainFn=urllib.urlretrieve(_url,_trainFn)
 
 ```
-
+---
 
 ```python
 _trainRdd = spark.sparkContext.textFile(_trainFn)
 print _trainRdd.count()
-```
 
     4898431
+```
 
-
+---
 
 ```python
 _trainRdd.take(1)
 ```
 
 
-
+```text
 
     [u'0,tcp,http,SF,215,45076,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0.00,0.00,0.00,0.00,1.00,0.00,0.00,0,0,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,normal.']
 
+```
 
+---
 
 * test data
 
@@ -1294,26 +1336,27 @@ if(not os.path.exists(_testFn)):
 
 ```
 
+---
 
 ```python
 _testRdd = spark.sparkContext.textFile(_testFn)
 print _testRdd.count()
-```
 
     311029
+```
 
-
+---
 
 ```python
 _testRdd.take(1)
-```
 
 
 
 
     [u'0,udp,private,SF,105,146,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0.00,0.00,0.00,0.00,1.00,0.00,0.00,255,254,1.00,0.01,0.00,0.00,0.00,0.00,0.00,0.00,normal.']
+```
 
-
+---
 
 ### 2단계: 데이터 준비
 
@@ -1329,6 +1372,7 @@ _testRdd.take(1)
 인덱스 | 1 | 2 | 3| ... | 42
 데이터 값 예 | tcp | http | SF | ... | normal
 
+---
 
 * 2-1 csv를 분리한다.
     * csv를 컴마로 분리하여, 2차원 데이터로 구조화한다.
@@ -1339,15 +1383,19 @@ _train = _trainRdd.map(lambda x: x.split(","))
 _test = _testRdd.map(lambda x: x.split(","))
 ```
 
+---
 
 ```python
 print len(_train.first()), _train.first()
 print len(_test.first()), _test.first()
 ```
 
+```text
     42 [u'0', u'tcp', u'http', u'SF', u'215', u'45076', u'0', u'0', u'0', u'0', u'0', u'1', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'1', u'1', u'0.00', u'0.00', u'0.00', u'0.00', u'1.00', u'0.00', u'0.00', u'0', u'0', u'0.00', u'0.00', u'0.00', u'0.00', u'0.00', u'0.00', u'0.00', u'0.00', u'normal.']
     42 [u'0', u'udp', u'private', u'SF', u'105', u'146', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'0', u'1', u'1', u'0.00', u'0.00', u'0.00', u'0.00', u'1.00', u'0.00', u'0.00', u'255', u'254', u'1.00', u'0.01', u'0.00', u'0.00', u'0.00', u'0.00', u'0.00', u'0.00', u'normal.']
+```
 
+---
 
 * 2-2 변수를 확인하여, 연속 값 또는 명목 값을 가지도록 한다.
     * 2,3,4번째 속성에 알파벳이 있다. 명목 값을 구하기 위해, 중복 값을 제외하고 key를 구한다.
@@ -1359,6 +1407,7 @@ services = _train.map(lambda x: x[2]).distinct().collect()
 flags = _train.map(lambda x: x[3]).distinct().collect()
 ```
 
+---
 
 ```python
 print len(protocols), protocols
@@ -1366,10 +1415,14 @@ print len(services), services
 print len(flags), flags
 ```
 
+```text
+
     3 [u'udp', u'icmp', u'tcp']
     70 [u'urp_i', u'http_443', u'Z39_50', u'smtp', u'domain', u'private', u'echo', u'time', u'shell', u'red_i', u'eco_i', u'sunrpc', u'ftp_data', u'urh_i', u'pm_dump', u'pop_3', u'pop_2', u'systat', u'ftp', u'uucp', u'whois', u'harvest', u'netbios_dgm', u'efs', u'remote_job', u'daytime', u'ntp_u', u'finger', u'ldap', u'netbios_ns', u'kshell', u'iso_tsap', u'ecr_i', u'nntp', u'http_2784', u'printer', u'domain_u', u'uucp_path', u'courier', u'exec', u'aol', u'netstat', u'telnet', u'gopher', u'rje', u'sql_net', u'link', u'ssh', u'netbios_ssn', u'csnet_ns', u'X11', u'IRC', u'tftp_u', u'login', u'supdup', u'name', u'nnsp', u'mtp', u'http', u'bgp', u'ctf', u'hostnames', u'klogin', u'vmnet', u'tim_i', u'discard', u'imap4', u'auth', u'other', u'http_8001']
     11 [u'OTH', u'RSTR', u'S3', u'S2', u'S1', u'S0', u'RSTOS0', u'REJ', u'SH', u'RSTO', u'SF']
+```
 
+---
 
 * 2-3 train data를 생성한다.
     * LabeledPoint 형식으로 만든다.
@@ -1388,17 +1441,19 @@ print len(flags), flags
 
 * index()는 list의 index를 알려 준다. 
 
+---
+
 
 ```python
 protocols.index('tcp')
-```
 
 
 
 
     2
+```
 
-
+---
 
 * 1건에 대해 LabeledPoint 생성 해보기
 
@@ -1419,19 +1474,19 @@ attack = 0.0 if line[-1]=='normal.' else 1.0
 LabeledPoint(attack, [float(x) for x in feature])
 ```
 
-
-
+```text
 
     LabeledPoint(0.0, [0.0,2.0,58.0,10.0,215.0,45076.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0])
+```
 
-
-
+---
 
 ```python
 for i,e in enumerate(line):
     print i,e
 ```
 
+```text
     0 0
     1 tcp
     2 http
@@ -1474,7 +1529,9 @@ for i,e in enumerate(line):
     39 0.00
     40 0.00
     41 normal.
+```
 
+---
 
 * LabeledPoint를 생성한다.
 
@@ -1496,15 +1553,21 @@ trainRdd = _train.map(createLP)
 testRdd = _test.map(createLP)
 ```
 
+---
 
 ```python
 print trainRdd.first()
 print testRdd.first()
 ```
 
+```text
+
     (0.0,[0.0,2.0,58.0,10.0,215.0,45076.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0])
     (0.0,[0.0,0.0,5.0,10.0,105.0,146.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,255.0,254.0,1.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0])
 
+```
+
+---
 
 
 ```python
@@ -1516,7 +1579,7 @@ trainRdd.count()
 
     4898431
 
-
+---
 
 
 ```python
@@ -1528,7 +1591,7 @@ testRdd.count()
 
     311029
 
-
+---
 
 ### 3단계: 모델링
 
@@ -1543,7 +1606,7 @@ impurity| "entropy" 또는 "gini"
 maxDepth | 트리의 최대 깊이 0 means 1 leaf node. Depth 1 means 1 internal node + 2 leaf nodes.
 maxBins| Number of bins used for finding splits at each node.
 
-
+---
 
 ```python
 from pyspark.mllib.tree import DecisionTree, DecisionTreeModel
@@ -1552,6 +1615,8 @@ treeModel = DecisionTree.trainClassifier(trainRdd, numClasses=2,
               impurity='gini', maxDepth=4, maxBins=100)
 ```
 
+---
+
 ### 4단계: 예측
 
 
@@ -1559,6 +1624,8 @@ treeModel = DecisionTree.trainClassifier(trainRdd, numClasses=2,
 predictions = treeModel.predict(testRdd.map(lambda p: p.features))
 labels_and_preds = testRdd.map(lambda p: p.label).zip(predictions)
 ```
+
+---
 
 ### 5단계: 평가
 
@@ -1574,11 +1641,13 @@ print test_accuracy
 
     0.918795353488
 
-
+---
 
 ```python
 print treeModel.toDebugString()
 ```
+
+```text
 
     DecisionTreeModel classifier of depth 4 with 29 nodes
       If (feature 22 <= 55.0)
@@ -1625,11 +1694,13 @@ print treeModel.toDebugString()
         Else (feature 29 > 0.08)
          Predict: 1.0
     
+```
 
+---
 
 * chi
 https://www.codementor.io/jadianes/spark-mllib-logistic-regression-du107neto
-```
+```python
 def parse_interaction_categorical(line):
     line_split = line.split(",")
     clean_line_split = line_split[6:41]
@@ -1642,1012 +1713,3 @@ def parse_interaction_categorical(line):
 training_data_categorical = raw_data.map(parse_interaction_categorical)
 ```
 
-## 문제 S-4: Spark MLib LDA
-
-https://www.kaggle.com/c/crowdflower-search-relevance
-
-https://github.com/hacertilbec/LDA-spark-python/blob/master/SparkLDA.py#L6
-
-### newsgroup
-
-* 문제: computer 관련 분류, 토픽모델링
-* 'mini_newsgroups.tar.gz' newsgroup을 내려받기
-* 내려받고 압축을 푼다 'tar -xvfz mini_newsgroups.tar.gz'
-* 디렉토리를 textFile() 인자로 넣으면, 구성 파일의 내용을 읽는다.
-
-* original 20 Newsgroups dataset에서 무작위로 선별하여 mini 20 Newsgroups dataset
-* 100 articles from the following 20 Usenet newsgroups:
-
-```
-alt.atheism
-comp.graphics
-comp.os.ms-windows.misc
-comp.sys.ibm.pc.hardware
-comp.sys.mac.hardware
-comp.windows.x
-misc.forsale
-rec.autos
-rec.motorcycles
-rec.sport.baseball
-rec.sport.hockey
-sci.crypt
-sci.electronics
-sci.med
-sci.space
-soc.religion.christian
-talk.politics.guns
-talk.politics.mideast
-talk.politics.misc
-talk.religion.misc
-```
-
-The articles from each of the 20 Newsgroups are arranged by topic in filesystem directories
-– 20 directories, one per topic
-– 100 files in each directory, one file = one document
-
-* sklearn의 datasets
-
-
-```python
-from sklearn.datasets import fetch_20newsgroups
-newsgroups_train = fetch_20newsgroups(subset='train')
-
-list(newsgroups_train.target_names)
-```
-
-
-
-
-    ['alt.atheism',
-     'comp.graphics',
-     'comp.os.ms-windows.misc',
-     'comp.sys.ibm.pc.hardware',
-     'comp.sys.mac.hardware',
-     'comp.windows.x',
-     'misc.forsale',
-     'rec.autos',
-     'rec.motorcycles',
-     'rec.sport.baseball',
-     'rec.sport.hockey',
-     'sci.crypt',
-     'sci.electronics',
-     'sci.med',
-     'sci.space',
-     'soc.religion.christian',
-     'talk.politics.guns',
-     'talk.politics.mideast',
-     'talk.politics.misc',
-     'talk.religion.misc']
-
-
-
-* archive.ics.uci.edu에서 내려 받기
-
-
-```python
-import os
-import urllib
-_url="https://archive.ics.uci.edu/ml/machine-learning-databases/20newsgroups-mld/mini_newsgroups.tar.gz"
-_trainFn=os.path.join(os.getcwd(),'data','mini_newsgroups.tar.gz')
-if(not os.path.exists(_trainFn)):
-    print "%s data does not exist! retrieving.." % _trainFn
-    _trainFn=urllib.urlretrieve(_url,_trainFn)
-```
-
-    /home/jsl/Code/git/bb/jsl/pyds/data/mini_newsgroups.tar.gz data does not exist! retrieving..
-
-
-* wildcards '*'를 사용하면 하위 디렉토리 모든 파일
-* file
-
-
-```python
-import os
-newsDir=os.path.join("data","mini_newsgroups","*")
-_testRdd = spark.sparkContext.wholeTextFiles(newsDir)
-print _testRdd.count()
-```
-
-    2000
-
-
-
-```python
-_file=_testRdd.first()[0]
-_text=_testRdd.first()[1]
-```
-
-* \n\n 다음에 본문이 시작된다. 본문을 꺼내려면 \n\n을 찾는다.
-
-
-```python
-print _file
-_file.split('/')[-2]
-```
-
-    file:/home/jsl/Code/git/bb/jsl/pyds/data/mini_newsgroups/sci.space/61262
-
-
-
-
-
-    u'sci.space'
-
-
-
-
-```python
-print _text
-```
-
-    Xref: cantaloupe.srv.cs.cmu.edu sci.space:61262 sci.astro:35052
-    Path: cantaloupe.srv.cs.cmu.edu!magnesium.club.cc.cmu.edu!news.sei.cmu.edu!cis.ohio-state.edu!pacific.mps.ohio-state.edu!zaphod.mps.ohio-state.edu!darwin.sura.net!bogus.sura.net!news-feed-1.peachnet.edu!umn.edu!msus1.msus.edu!vax1.mankato.msus.edu!belgarath
-    Newsgroups: sci.space,sci.astro
-    Subject: Re: Gamma Ray Bursters. Where are they?
-    Message-ID: <1993Apr26.192535.1@vax1.mankato.msus.edu>
-    From: belgarath@vax1.mankato.msus.edu
-    Date: 26 Apr 93 19:25:35 -0600
-    References: <1radsr$att@access.digex.net> <1993Apr24.221344.1@vax1.mankato.msus.edu> 
-     <93116.093828SAUNDRSG@QUCDN.QueensU.CA> <1993Apr26.141114.19777@midway.uchicago.edu>
-    Organization: Mankato State University
-    Nntp-Posting-Host: vax1.mankato.msus.edu
-    Lines: 53
-    
-    In article <1993Apr26.141114.19777@midway.uchicago.edu>, pef1@quads.uchicago.edu (it's enrico palazzo!) writes:
-    >> = From: Graydon <SAUNDRSG@QUCDN.QueensU.CA>
-    > 
-    >> If all of these things have been detected in space, has anyone
-    >> looked into possible problems with the detectors?
-    > 
-    >> That is, is there some mechanism (cosmic rays, whatever) that
-    >> could cause the dector to _think_ it was seeing one of these
-    >> things?
-    > 
-    >> Graydon
-    > 
-    > That would not explain why widely separated detectors, such as on Ulysses
-    > and PVO and Ginga et al., would see a burst at the same time(*).  In fact, be-
-    > fore BATSE, having this widely separated "Interplanetary Network" was the
-    > only sure way to locate a random burst.  With only one detector, one cannot
-    > locate a burst (except to say "It's somewhere in the field of view.").  With
-    > two detectors, one can use the time that the burst is seen in each detector
-    > to narrow the location to a thin annulus on the sky.  With three detectors,
-    > one gets intersecting annuli, giving two possible locations.  If one of these
-    > locations is impossible (because, say, the Earth blocked that part of the 
-    > sky), voila, you have an error box.
-    > 
-    > BATSE, by having 8 detectors of its own, can do its own location determination,
-    > but only to within about 3 degrees (would someone at GSFC, like David, like
-    > to comment on the current state of location determination?).  Having inde-
-    > pendent sightings by other detectors helps drive down the uncertainty.
-    > 
-    > You did touch on something that you didn't mean to, though.  Some believe
-    > (in a reference that I have somewhere) that absorption-like features seen
-    > in a fraction of GRBs can actually be caused by the detector.  It would be
-    > a mean, nasty God, though, that would have a NaI crystal act like a 10^12 Gauss
-    > neutron star...but this is getting too far afield.
-    > 
-    > Peter
-    > peterf@oddjob.uchicago.edu
-    > 
-    
-            All of this is VERY valid and very true.  But to add to this
-    explaniation, each individual detector also has a built in fail-safe, just so
-    the detector does not read the background radiation(i.e. cosmic rays), 
-    if I remember right, the detectors go off about 3 to 5 sigma above the 
-    background.  This is so they don't catch particularly energetic cosmic rays
-    that would normally set it off. Even with this buffer, they still have to throw
-    out something like 1/2 of the bursts that they DO get, because of the Earth's
-    Van Allen Belts, the South Atlantic Anomaly, the Sun,  if I remember right,
-    there is either a radar station, or a radio station in Australia, and there are
-    a couple other sources as well.  
-                                                    -jeremy
-                                                    belgarath@vax1.mankato.msus.edu
-    
-    
-    
-    
-
-
-* DataFrame을 생성한다.
-    * 문서번호를 생성하기 위해 zipWithIndex()를 사용한다.
-    * zipWithIndex()는 각 요소에 id를 0부터 순서대로 생성해서 묶는다.
-
-
-```python
-spark.sparkContext.parallelize(["x", "y", "z"]).zipWithIndex().collect()
-```
-
-
-
-
-    [('x', 0), ('y', 1), ('z', 2)]
-
-
-
-
-```python
-from pyspark.sql import Row
-path = 'data/ds_spark_wiki.txt'
-_rdd = spark.sparkContext.textFile(path).zipWithIndex()\
-    .map(lambda(words,idd): Row(idd= idd, words = words.split(" ")))
-df = spark.createDataFrame(_rdd)
-
-df.printSchema()
-```
-
-    root
-     |-- idd: long (nullable = true)
-     |-- words: array (nullable = true)
-     |    |-- element: string (containsNull = true)
-    
-
-
-
-```python
-_rdd=_testRdd.map(lambda x:x[1])
-_rdd=_rdd.zipWithIndex()
-df=_rdd.toDF(["text","id"])
-```
-
-
-```python
-df.show(3)
-```
-
-    +--------------------+---+
-    |                text| id|
-    +--------------------+---+
-    |Xref: cantaloupe....|  0|
-    |Xref: cantaloupe....|  1|
-    |Newsgroups: sci.s...|  2|
-    +--------------------+---+
-    only showing top 3 rows
-    
-
-
-
-```python
-* filter
-
-* regextokenizer
-* stopwords
-* countvectorizer
-* lda
-```
-
-* filter
-
-패턴 | 설명
------|-----
-@[\w]+ | @로 시작하는 alphanumerics
-[^\w] | , . > ! : - 등 alphanumeric이 아닌 한 글자
-\w+:\/\/\S+ | ://를 가지고 있는 url
-\d+ | 숫자로만 되어 있는 경우
-
-
-
-
-```python
-mystr="""Xref: cantaloupe.srv.cs.cmu.edu sci.space:61262 sci.astro:35052
-Path: cantaloupe.srv.cs.cmu.edu!magnesium.club.cc.cmu.edu!news.sei.cmu.edu!cis.ohio-state.edu!pacific.mps.ohio-state.edu!zaphod.mps.ohio-state.edu!darwin.sura.net!bogus.sura.net!news-feed-1.peachnet.edu!umn.edu!msus1.msus.edu!vax1.mankato.msus.edu!belgarath
-Newsgroups: sci.space,sci.astro
-Subject: Re: Gamma Ray Bursters. Where are they?
-Message-ID: <1993Apr26.192535.1@vax1.mankato.msus.edu>
-From: belgarath@vax1.mankato.msus.edu
-Date: 26 Apr 93 19:25:35 -0600
-References: <1radsr$att@access.digex.net> <1993Apr24.221344.1@vax1.mankato.msus.edu> 
- <93116.093828SAUNDRSG@QUCDN.QueensU.CA> <1993Apr26.141114.19777@midway.uchicago.edu>
-Organization: Mankato State University
-Nntp-Posting-Host: vax1.mankato.msus.edu
-Lines: 53
-
-In article <1993Apr26.141114.19777@midway.uchicago.edu>, pef1@quads.uchicago.edu (it's enrico palazzo!) writes:
->> = From: Graydon <SAUNDRSG@QUCDN.QueensU.CA>"""
-```
-
-
-```python
-import re
-p=re.compile("(@[\w]+)|([^\w])|(\w+:\/\/\S+)|([^0-9]*)")
-res=filter(p.search,mystr.split())
-for e in res:
-    print e
-```
-
-    Xref:
-    cantaloupe.srv.cs.cmu.edu
-    sci.space:61262
-    sci.astro:35052
-    Path:
-    cantaloupe.srv.cs.cmu.edu!magnesium.club.cc.cmu.edu!news.sei.cmu.edu!cis.ohio-state.edu!pacific.mps.ohio-state.edu!zaphod.mps.ohio-state.edu!darwin.sura.net!bogus.sura.net!news-feed-1.peachnet.edu!umn.edu!msus1.msus.edu!vax1.mankato.msus.edu!belgarath
-    Newsgroups:
-    sci.space,sci.astro
-    Subject:
-    Re:
-    Gamma
-    Ray
-    Bursters.
-    Where
-    are
-    they?
-    Message-ID:
-    <1993Apr26.192535.1@vax1.mankato.msus.edu>
-    From:
-    belgarath@vax1.mankato.msus.edu
-    Date:
-    26
-    Apr
-    93
-    19:25:35
-    -0600
-    References:
-    <1radsr$att@access.digex.net>
-    <1993Apr24.221344.1@vax1.mankato.msus.edu>
-    <93116.093828SAUNDRSG@QUCDN.QueensU.CA>
-    <1993Apr26.141114.19777@midway.uchicago.edu>
-    Organization:
-    Mankato
-    State
-    University
-    Nntp-Posting-Host:
-    vax1.mankato.msus.edu
-    Lines:
-    53
-    In
-    article
-    <1993Apr26.141114.19777@midway.uchicago.edu>,
-    pef1@quads.uchicago.edu
-    (it's
-    enrico
-    palazzo!)
-    writes:
-    >>
-    =
-    From:
-    Graydon
-    <SAUNDRSG@QUCDN.QueensU.CA>
-
-
-
-```python
-
-```
-
-
-```python
-from pyspark.sql.functions import udf
-from pyspark.sql.types import StringType
-import re
-
-def myFilter(s):
-    return ' '.join(re.sub("(@[\w]+)|([^\w])|(\w+:\/\/\S+)"," ",s).split())
-myUdf = udf(myFilter, StringType())
-filterDF = _tDf.withColumn("textFiltered", myUdf(_tDf['text']))
-```
-
-
-```python
-from pyspark.ml.feature import *
-re = RegexTokenizer(inputCol="text", outputCol="words", pattern="\\W")
-wordsDf=re.transform(df)
-```
-
-
-```python
-from pyspark.ml.feature import StopWordsRemover
-stop = StopWordsRemover(inputCol="words", outputCol="nostops")
-stopDf=stop.transform(wordsDf)
-```
-
-
-```python
-from pyspark.ml.feature import CountVectorizer
-cv = CountVectorizer(inputCol="nostops", outputCol="vectors")
-cvModel = cv.fit(stopDf)
-cvDf = cvModel.transform(stopDf)
-
-cvDf.printSchema()
-
-cvDf.count()
-```
-
-    root
-     |-- text: string (nullable = true)
-     |-- id: long (nullable = true)
-     |-- words: array (nullable = true)
-     |    |-- element: string (containsNull = true)
-     |-- nostops: array (nullable = true)
-     |    |-- element: string (containsNull = true)
-     |-- vectors: vector (nullable = true)
-    
-
-
-
-
-
-    2000
-
-
-
-
-```python
-voca=cvModel.vocabulary
-nword=len(voca)
-ntopic=10
-ndoc=df.count()
-print "단어수: ",nword
-print "문서수: ",ndoc
-for i,v in enumerate(voca):
-    if(i%500==True):
-        print i,v,'-'
-```
-
-    단어수:  50532
-    문서수:  2000
-    1 cmu -
-    501 current -
-    1001 picture -
-    1501 athena -
-    2001 aurora -
-    2501 chi -
-    3001 encrypted -
-    3501 lock -
-    4001 depth -
-    4501 intend -
-    5001 headed -
-    5501 judging -
-    6001 initially -
-    6501 highway -
-    7001 768 -
-    7501 wondered -
-    8001 wickman -
-    8501 polite -
-    9001 mathematica -
-    9501 allies -
-    10001 upgrades -
-    10501 persecuted -
-    11001 hype -
-    11501 infallibility -
-    12001 699 -
-    12501 loyd -
-    13001 ubvmsd -
-    13501 venky -
-    14001 ddbeezer -
-    14501 cci -
-    15001 rpao -
-    15501 meltdown -
-    16001 homayoon -
-    16501 hereditary -
-    17001 15806 -
-    17501 nred -
-    18001 ludd -
-    18501 feirerra -
-    19001 n1nzu -
-    19501 dergisi -
-    20001 flashlight -
-    20501 446 -
-    21001 fnord -
-    21501 inverting -
-    22001 burge -
-    22501 8994 -
-    23001 retreating -
-    23501 bergqvist -
-    24001 cooked -
-    24501 cursive -
-    25001 kaiser -
-    25501 havens -
-    26001 mannikin -
-    26501 entrangeres -
-    27001 neccessity -
-    27501 q2g -
-    28001 93apr23102102 -
-    28501 m0108ll -
-    29001 newcott -
-    29501 7754 -
-    30001 6gre -
-    30501 _biological -
-    31001 brewers -
-    31501 1993apr03 -
-    32001 cu6 -
-    32501 roland_behunin -
-    33001 comprimised -
-    33501 jrsc5frfr -
-    34001 7rb -
-    34501 colum -
-    35001 rbnmtm -
-    35501 _lots_ -
-    36001 tenses -
-    36501 15970 -
-    37001 146ij_7ej_6k -
-    37501 chattels -
-    38001 fj1200 -
-    38501 c5tb2f -
-    39001 57khz -
-    39501 rlkyrm8 -
-    40001 031823 -
-    40501 v95pjex -
-    41001 140723 -
-    41501 336683788851850579e -
-    42001 epistimology -
-    42501 592586 -
-    43001 awdpa -
-    43501 atrophy -
-    44001 martyr -
-    44501 kibbitzer -
-    45001 hypothically -
-    45501 a84ga84g -
-    46001 terrestrial -
-    46501 tatoo -
-    47001 3mo -
-    47501 haley -
-    48001 wonderland_ -
-    48501 n0m -
-    49001 petr -
-    49501 eyeballs -
-    50001 burrito -
-    50501 ramblings -
-
-
-* y는 ml Vectors이다. mllib에서 사용하려면 변환이 필요하다.
-
-
-```python
-from pyspark.mllib.linalg import Vectors
-# ndoc -> corpus_size = cvDf.count()  # total number of words
-testRdd = cvDf.select("id", "vectors")\
-    .rdd.map(lambda (x,y): [x,Vectors.fromML(y)]).cache()
-```
-
-
-```python
-from pyspark.mllib.clustering import LDA, LDAModel
-ldaModel = LDA.train(testRdd, k=ntopic,maxIterations=100,optimizer='online')
-
-topic=ldaModel.describeTopics(maxTermsPerTopic=10)
-
-for k in range(ntopic):
-    print "* Topic: ", k, topic[k]
-
-for k in range(ntopic):
-    print "Topic ",k
-    for w in topic[k][0]:
-        print voca[w],
-    print "\n-----"
-```
-
-    * Topic:  0 ([1218, 2555, 3099, 3673, 1305, 328, 967, 1453, 3807, 4681], [0.00446606182130309, 0.0033798280978327177, 0.003165296452491259, 0.0029992725381732706, 0.0027726988486314846, 0.0027442033008861708, 0.002675320971691053, 0.002426857581933155, 0.002155048128705299, 0.0020344004763281297])
-    * Topic:  1 ([1686, 2374, 2203, 1542, 4371, 1343, 4202, 780, 5294, 1979], [0.004612963520161311, 0.003638496210463725, 0.0033858331735928146, 0.0026107819792790064, 0.0020867475502417358, 0.0020596069061911766, 0.0019152543492338156, 0.0017067101731930736, 0.0013959371145195812, 0.0013867822229835089])
-    * Topic:  2 ([2618, 5548, 3009, 3609, 2778, 4239, 4592, 4839, 3477, 4617], [0.0034520127948244202, 0.0024376583265894084, 0.002397474729936783, 0.0022175644371884426, 0.002141850348482497, 0.001987419729703522, 0.0017942425559203986, 0.0016703075245876108, 0.0015030039514219537, 0.0014750798620378688])
-    * Topic:  3 ([39, 144, 107, 66, 239, 134, 353, 150, 225, 94], [0.03245218526829409, 0.021224591395944726, 0.015368353457465607, 0.015060774816669915, 0.013232425128893055, 0.012047438707484674, 0.008631414662419045, 0.0070337560298776615, 0.006991642472555907, 0.006682438190530347])
-    * Topic:  4 ([659, 153, 88, 1785, 2408, 575, 1294, 1653, 2392, 2841], [0.007836003301457228, 0.006191641423758272, 0.004294832380715145, 0.0031002673838980118, 0.0030378929148773596, 0.0030009507107107082, 0.00298262834277637, 0.0025512929111534176, 0.001904133482756802, 0.0018487997125403418])
-    * Topic:  5 ([285, 2566, 1001, 2057, 2471, 4421, 3475, 5269, 9733, 5889], [0.0036464412040949326, 0.003618818080428977, 0.003563699910994846, 0.002993360133142995, 0.0018421805818369912, 0.0018003853116627664, 0.0017421430759043974, 0.0016295658162301671, 0.0015273250297536114, 0.0014809302001226865])
-    * Topic:  6 ([21, 46, 71, 8, 26, 37, 56, 163, 146, 148], [0.02597066585114597, 0.013811418631441053, 0.013456482614800251, 0.011037439035795432, 0.010280339894431084, 0.009370728976065399, 0.008079585699476411, 0.005812665179090059, 0.005679856071011338, 0.005630616072982106])
-    * Topic:  7 ([4653, 10046, 11013, 8816, 9572, 9806, 9700, 10483, 10687, 10261], [0.0013711843759944425, 0.001143158237496648, 0.0009403656297908877, 0.0009107915421267248, 0.0009029772094022746, 0.0008225093021728819, 0.0008079042902016751, 0.000683154555997964, 0.0006762717058768903, 0.0006744124221683671])
-    * Topic:  8 ([79, 330, 5919, 708, 6641, 9254, 5861, 7084, 3010, 6698], [0.012258900946569532, 0.0023787483367008607, 0.0017551955336359726, 0.001706326006927757, 0.0015561123855455667, 0.0014851971460044223, 0.001470126392161258, 0.0014277937844426809, 0.0014198216015018931, 0.001417586298597661])
-    * Topic:  9 ([0, 1, 2, 3, 4, 5, 6, 7, 9, 10], [0.034512767199491395, 0.011095942219650518, 0.010935419904465442, 0.00952093978841103, 0.00720447336226664, 0.0066993281268450606, 0.005440434264296813, 0.005144055585522955, 0.0045551242826680745, 0.004520414833731249])
-    Topic  0
-    homosexuality boswell cholesterol alzheimer cancer paul disease sin arsenokoitai hicnet 
-    -----
-    Topic  1
-    wri markp elvis princeton lsd mantis pundurs objective cisco rusnews 
-    -----
-    Topic  2
-    kilometers vinge balloon defamation vega stephens asa lander venera soviets 
-    -----
-    Topic  3
-    r 0d _ p _o g 145 q k u 
-    -----
-    Topic  4
-    wiring culture soc gfci istanbul wire neutral outlets outlet prong 
-    -----
-    Topic  5
-    45 sleeve picture magi sweden switzerland russia promo bongo czech 
-    -----
-    Topic  6
-    x windows dos 1 2 3 0 data image graphics 
-    -----
-    Topic  7
-    hal9k toelle evansville uncc rti mmc den clk wawers skybridge 
-    -----
-    Topic  8
-    00 01 aug launch meteor battan anniversary jul xxxx shower 
-    -----
-    Topic  9
-    edu cmu com cs news srv cantaloupe net subject message 
-    -----
-
-
-## Recommendation
-
-
-* content based filtering
-* collaborative  ltering
-* matrix factorization
-* ALS
-ALS works by iteratively solving a series of least squares regression problems.
-    * rank - the number of factors in our ALS model
-    * iterations - around 10 is often a good default
-    * lambda - The higher the value of lambda,
-the more is the regularization applied
-
-## 문제 S-5: Spark MLib movie recommendation
-
-* ALS로 추천
-
-
-* [spark recommendation](https://www.codementor.io/spark/tutorial/building-a-recommender-with-apache-spark-python-example-app-part1)
-
-* [spark flask](https://www.codementor.io/spark/tutorial/building-a-web-service-with-apache-spark-flask-example-app-part2)
-
-* 주 13 - spark 추천 영화 음악? 
-    * amazon similarity lookup http://blogs.gartner.com/martin-kihn/how-to-build-a-recommender-system-in-python/
-    * https://www.codementor.io/spark/tutorial/building-a-web-service-with-apache-spark-flask-example-app-part2
-    * https://github.com/grahamjenson/list_of_recommender_systems
-        * content-based filtering
-        * collaborative filtering
-
-### S-13.1 데이터 수집
-
-?https://inclass.kaggle.com/c/movie
-
-* MovieLens는 University of Minnesota에서 제공하는 프로젝트, [grouplens](https://grouplens.org/)
-* 영화평가 파일은 zip
-* gz는 바로 읽을 수 있으나
-
-
-```python
-import os
-import urllib
-
-ml_url = 'http://files.grouplens.org/datasets/movielens/ml-latest.zip'
-ml_small_url = 'http://files.grouplens.org/datasets/movielens/ml-latest-small.zip'
-
-ml_fname=os.path.join(os.getcwd(),'data','ml-latest.zip')
-if(not os.path.exists(ml_fname)):
-    print "%s data does not exist! retrieving.." % ml_fname
-    ml_f=urllib.urlretrieve(ml_url,ml_fname)
-
-ml_small_fname=os.path.join(os.getcwd(),'data','ml-latest-small.zip')
-if(not os.path.exists(ml_small_fname)):
-    print "%s data does not exist! retrieving.." % ml_small_fname
-    ml_small_f=urllib.urlretrieve(ml_small_url,ml_small_fname)
-```
-
-* unzip
-
-
-```python
-import zipfile
-
-zipfiles=[ml_fname,ml_small_fname]
-for f in zipfiles:
-    zip = zipfile.ZipFile(f)
-    zip.extractall('data')
-
-```
-
-* 압축한 파일 살펴보기
-
-
-```python
-!ls data/ml-latest-small/
-```
-
-    links.csv  movies.csv  ratings.csv  README.txt	tags.csv
-
-
-
-```python
-!head data/ml-latest-small/links.csv
-```
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-```python
-!head data/ml-latest-small/movies.csv
-```
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-```python
-!head data/ml-latest-small/ratings.csv
-```
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-```python
-!head data/ml-latest-small/tags.csv
-```
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-### S-13.2 ETL
-
-* RDD
-    * 앞서 정의한 sc를 사용
-
-
-```python
-small_ratings = os.path.join('data', 'ml-latest-small', 'ratings.csv')
-
-small_ratings_rdd = spark.sparkContext.textFile(small_ratings)
-small_ratings_rdd_header = small_ratings_rdd.take(1)[0]
-print small_ratings_rdd_header
-```
-
-    userId,movieId,rating,timestamp
-
-
-
-```python
-small_ratings_data = small_ratings_rdd\
-    .filter(lambda line: line!=small_ratings_rdd_header)\
-    .map(lambda line: line.split(","))\
-    .map(lambda tokens: (tokens[0],tokens[1],tokens[2]))\
-    .cache()
-small_ratings_data.take(3)
-```
-
-
-
-
-    [(u'1', u'16', u'4.0'), (u'1', u'24', u'1.5'), (u'1', u'32', u'4.0')]
-
-
-
-
-```python
-def csvRdd(csvpath):
-    _rdd = spark.sparkContext.textFile(csvpath)
-    _rdd_header = _rdd.take(1)[0]
-    print "header: %s" % _rdd_header
-    rdd = _rdd.\
-        filter(lambda line: line!=_rdd_header) \
-        .map(lambda line: line.split(",")) \
-        .map(lambda tokens: (tokens[0],tokens[1],tokens[2])) \
-        .cache()
-    return rdd
-```
-
-
-```python
-#ratingspath = os.path.join(datapath, 'ml-latest-small', 'ratings.csv')
-#ratings=csvRdd(ratingspath)
-ratings=csvRdd(small_ratings)
-ratings.take(3)
-```
-
-    header: userId,movieId,rating,timestamp
-
-
-
-
-
-    [(u'1', u'16', u'4.0'), (u'1', u'24', u'1.5'), (u'1', u'32', u'4.0')]
-
-
-
-
-```python
-moviespath = os.path.join('data', 'ml-latest-small', 'movies.csv')
-movies=csvRdd(moviespath)
-movies.take(3)
-```
-
-    header: movieId,title,genres
-
-
-
-
-
-    [(u'1', u'Toy Story (1995)', u'Adventure|Animation|Children|Comedy|Fantasy'),
-     (u'2', u'Jumanji (1995)', u'Adventure|Children|Fantasy'),
-     (u'3', u'Grumpier Old Men (1995)', u'Comedy|Romance')]
-
-
-
-### S-13.3 모델링
-
-구분 | 비율
------|-----
-train | 6
-validation | 2
-test | 2
-
-
-```python
-* MSE Mean Squared Error
-
-* Root Mean Squared Error (RMSE)
-```
-
-
-```python
-from pyspark.mllib.recommendation import ALS
-import math
-
-_train, _validation, _test=ratings.randomSplit([6, 2, 2], seed=0L)
-_validation_01 = _validation.map(lambda x: (x[0], x[1]))
-_test_01 = _test.map(lambda x: (x[0], x[1]))
-
-seed = 5L
-iterations = 10
-regularization_parameter = 0.1
-ranks = [4, 8, 12]
-errors = [0, 0, 0]
-err = 0
-tolerance = 0.02
-
-min_error = float('inf')
-best_rank = -1
-best_iteration = -1
-for rank in ranks:
-    model = ALS.train(_train,rank,seed=seed,iterations=iterations,\
-                      lambda_=regularization_parameter)
-    predictions = model.predictAll(_validation_01)\
-        .map(lambda r: ((r[0], r[1]), r[2]))
-    rates_and_preds = _validation\
-        .map(lambda r: ((int(r[0]), int(r[1])), float(r[2])))\
-        .join(predictions)
-    error = math.sqrt(rates_and_preds.map(lambda r: (r[1][0]-r[1][1])**2)\
-                      .mean())
-    errors[err] = error
-    err += 1
-    print 'For rank %s the RMSE is %s' % (rank, error)
-    if error < min_error:
-        min_error = error
-        best_rank = rank
-
-print 'The best model was trained with rank %s' % best_rank
-
-```
-
-    For rank 4 the RMSE is 0.922345252375
-    For rank 8 the RMSE is 0.930922837081
-    For rank 12 the RMSE is 0.925555162553
-    The best model was trained with rank 4
-
-
-
-```python
-model.userFeatures
-```
-
-
-
-
-    <bound method MatrixFactorizationModel.userFeatures of <pyspark.mllib.recommendation.MatrixFactorizationModel object at 0x7f95e811b610>>
-
-
-
-
-```python
-predictions.take(3)
-```
-
-
-
-
-    [((384, 1084), 3.6775826431871153),
-     ((668, 1084), 3.204225935944695),
-     ((220, 1084), 3.8450699802260537)]
-
-
-
-* userId, moveId를 넣으면, ratings
-    * 1번 사용자, 24번 영화에 대한 rating은 약 2.04
-
-
-```python
-model.predict(1,24)
-```
-
-
-
-
-    2.0438126867172275
-
-
-
-* 1번 사용자, 상위 10개 상품 추천
-
-
-```python
-model.recommendProducts(1,10)
-```
-
-
-
-
-    [Rating(user=1, product=2920, rating=4.922689167223983),
-     Rating(user=1, product=61240, rating=4.90865915402299),
-     Rating(user=1, product=86377, rating=4.905143046374245),
-     Rating(user=1, product=104374, rating=4.889979338117981),
-     Rating(user=1, product=79274, rating=4.860825150137431),
-     Rating(user=1, product=7210, rating=4.799745725789635),
-     Rating(user=1, product=3272, rating=4.758622747837389),
-     Rating(user=1, product=66785, rating=4.75634224179369),
-     Rating(user=1, product=3083, rating=4.749451686424952),
-     Rating(user=1, product=1217, rating=4.731662442870702)]
-
-
-
-
-```python
-
-model = ALS.train(_train, best_rank, seed=seed, iterations=iterations,lambda_=regularization_parameter)
-predictions = model.predictAll(_test_01).map(lambda r: ((r[0], r[1]), r[2]))
-rates_and_preds = _test\
-    .map(lambda r: ((int(r[0]), int(r[1])), float(r[2])))\
-    .join(predictions)
-error = math.sqrt(rates_and_preds.map(lambda r: (r[1][0] - r[1][1])**2).mean())
-
-print 'For testing data the RMSE is %s' % (error)
-
-```
-
-    For testing data the RMSE is 0.920783817111
-
-
-###
-
-
-
-```python
-Visualising London Bike Hire Journey Lengths with Python and OSRM
-http://sensitivecities.com/bikeshare.html#.WUTJphPyiL4
-```
-
-### 문제 M-6: Ethereum
-
-* kaggle
-
-
-```python
-base_url = Template('http://www.gutenberg.org/files/$book_id/$book_id.txt')
-r = requests.get('http://www.gutenberg.org/browse/scores/top')
-```
