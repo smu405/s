@@ -644,7 +644,6 @@ rf = RandomForestClassifier(numTrees = 100, labelCol = 'index').fit(train)
 rawPrediction | 이진분류 예측 또는 확률, double 또는 벡터
 label | 실제 값
 
-. The rawPrediction column can be of type double (binary 0/1 prediction, or probability of label 1) or of type vector (length-2 vector of raw predictions, scores, or label probabilities).
 ---
 
 ```python
@@ -688,7 +687,9 @@ lrDf.printSchema()
 
 ```python
 lrDf.select('SurvivedD','rawPrediction','probability','prediction').show()
+```
 
+```text
     +---------+--------------------+--------------------+----------+
     |SurvivedD|       rawPrediction|         probability|prediction|
     +---------+--------------------+--------------------+----------+
@@ -720,15 +721,12 @@ lrDf.select('SurvivedD','rawPrediction','probability','prediction').show()
 
 
 ```python
-evaluator = BinaryClassificationEvaluator(rawPredictionCol = 'prediction',\
-                                          labelCol='SurvivedD')
+evaluator = BinaryClassificationEvaluator(rawPredictionCol = 'prediction', labelCol='SurvivedD')
 evaluator.evaluate(lrDf)
+```
 
-
-
-
+```text
     0.7919513103962241
-
 ```
 
 ---
@@ -736,8 +734,8 @@ evaluator.evaluate(lrDf)
 
 ```
 val nbMetricsCats = new BinaryClassificationMetrics(nbPredictionsVsTr ueCats)
-   val nbPrCats = nbMetricsCats.areaUnderPR
-   val nbRocCats = nbMetricsCats.areaUnderRO
+val nbPrCats = nbMetricsCats.areaUnderPR
+val nbRocCats = nbMetricsCats.areaUnderRO
 ```
 ---
 * 개선
@@ -777,7 +775,9 @@ Tweets
 구분 | 건수
 -----|-----
 데이터 행 | 14485
-데이터 열 | 15 tweet_id, airline_sentiment, airline_sentiment_confidence, negativereason, negativereason_confidence, airline, airline_sentiment_gold, name, negativereason_gold, retweet_count, text, tweet_coord, tweet_created, tweet_location, user_timezone
+데이터 열 | 15
+
+   * tweet_id, airline_sentiment, airline_sentiment_confidence, negativereason, negativereason_confidence, airline, airline_sentiment_gold, name, negativereason_gold, retweet_count, text, tweet_coord, tweet_created, tweet_location, user_timezone
 
 ---
 
@@ -794,7 +794,7 @@ tf-idf
 
 * sentiment
     * positive, neutral, negative
-
+---
 
 ```python
 tDf = spark.read.format('com.databricks.spark.csv')\
@@ -805,6 +805,9 @@ tDf.take(1)
 tDf.printSchema()
 ```
 
+---
+
+```text
     root
      |-- tweet_id: string (nullable = true)
      |-- airline_sentiment: string (nullable = true)
@@ -821,20 +824,20 @@ tDf.printSchema()
      |-- tweet_created: string (nullable = true)
      |-- tweet_location: string (nullable = true)
      |-- user_timezone: string (nullable = true)
-    
+```
 
-
+---
 
 ```python
 tDf.select('negativereason_confidence').count()
-```
 
 
 
 
     14650
+```
 
-
+---
 
 
 ```python
