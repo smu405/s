@@ -2,7 +2,7 @@
 
 # 빅데이터 프로그래밍
 
-* 최종수정일 20180902월
+* 최종수정일 20190903화
 
 ## 교과목 개요
 
@@ -32,24 +32,24 @@ Then the rest of the class will be spent on lab sessions for the students to app
 
 주 | 일자 | 내용 | 실제
 -----|-----|-----|-----
-주 1 |  9.06월 | intro 환경 Python 소개 IPython, --(Numpy, Scipy, Matplotlib, Pandas, Scikit-learn) | 소개
-주 2 |  9.10월 | web crawl html dom | Python
-주 3 |  9.17월 | web crawl --regex, beautifulSoup
-주 4 |  10.01월 | web crawl --xpath, css
-주 5 |  10.08월 | web crawl: 테이블, wiki 
-주 6 |  10.15월 | web crawl: 노래제목, 날씨, 댓글
-주 7 |  10.22월 | Selenium (프로젝트 과제 1차)
-주 8 |  10.29월 | 중간 시험 midterm 
-주 9 |  11.05월 | 저장 file, json, --xml, csv, MongoDB
-주 10 |  11.12월 | 저장 file, json, --xml, csv, MongoDB
-주 11 |  11.19월 | 열린데이터 api
-주 12 |  11.26월 | 열린데이터 api 
-주 13 |  12.03월 | spark rdd map-reduce
-주 14 |  12.10월 | 보강주 spark dataframe sql (프로젝트 2차 마감)
-주 15 |  12.17월 | 기말시험
+주 1 |  9.03화 4수 | 강의소개 
+주 2 |  9.10화 11수 | 빅데이터소개, 설치 
+주 3 |  9.17화 18수 | Spark RDD
+주 4 |  9.24화 25수 | Spark Dataframe
+주 5 |  10.01화 2수 | Spark 변환, 자연어처리
+주 6 |  10.08화 9수 | 기계학습소개, 상관관계
+주 7 |  10.15화 16수 | 회귀분석
+주 8 |  10.22화 23수 | 중간 시험 midterm 
+주 9 |  10.29화 28수 | 로지스틱 회귀
+주 10 |  11.05화 6수 | kNN
+주 11 |  11.12화 13수 | SVM
+주 12 |  11.19화 20수 | Decision Tree
+주 13 |  11.26화 27수 | 추천
+주 14 |  12.03화 4수 | 발표
+주 15 |  12.10화 11수 | 기말시험
 
 ## 과제
-* 빅데이터 과제를 제안하여, 완성한다 (댓글 또는 열린데이터 사용)
+* 빅데이터 과제를 제안하여, 완성한다 (댓글, 열린데이터 등 사용)
 * 다음 일정에 따라 ecampus에 제출한다.
 
 주 | 기한 | 내용
