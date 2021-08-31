@@ -1,74 +1,62 @@
-# 응용통계
+[![Gitter](https://badges.gitter.im/smu405/s.svg)](https://gitter.im/smu405/s?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Join the chat at https://gitter.im/smu405/c1_2021](https://badges.gitter.im/smu405/c1_2021.svg)](https://gitter.im/smu405/c1_2021?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## 목적
+# 빅데이터 프로그래밍
 
-* 프로그래밍으로 ML 배우기
+* 최종수정일 20190903화
 
-## 주별 강의
+## 교과목 개요
 
-* 주 3 - knn 2조
-* 주 4 - Tree 2조
-* 주 5 - Bayesian 1조
-* 주 6 - Logistic regression 3조
-* 주 7 - SVM 4조
-* 주 8
-* 주 9 - AdaBoosting 4조
-* 주 10 - Linear Regression 4조
-* 주 11 - cart 3조
-* 주 12 - Clustering 1조
-* 주 13- apriori 2조
-* 주 14 - FP
-* 주 15 - PCA
+* 본 교과목에서는 대량의 데이터를 분석하는 각 단계를 프로그래밍으로 하는 방법을 배운다.
+이 과정은 우선 데이터의 수집, 데이터의 정제, 저장, 분석 및 시각화로 구분할 수
+있다.
+* 데이터를 수집하기 위해서는 웹사이트를 크롤링하거나, OAuth인증과 REST API를 사용할 수 있다.
+수집된 데이터는 파일 또는 NoSQL을 사용하여 저장할 수 있다.
+정부에서 제공하는 오픈데이터를 사용하는 방법도 실습한다.
+가져온 데이터를 정제하고, 머신러닝으로 분석하고 시각화하기 위해 파이썬과 스파크를 배우게 된다.
+된다. 매 강의 초반부는 주제에 필요한 개념을 설명하고, 이를 적용해 프로그래밍 과제를 풀어나가는 방식으로 진행한다.
+    * 모듈1: 데이터수집 (1) 웹, (2) api
+    * 모듈2: 데이터저장 file (csv, json), nosql
+    * 모듈3: 분석 추론, 머신러닝
+    * 모듈4: 실시간 분석 Spark
+    * 모듈5: 시각화
+
+This class aims to teach programming required over the steps to analyze large-scale datasets.
+The students will learn how to collect the data by crawling web sites and use OAuth protocols and REST API.
+They will also learn to save the data in files or NoSQL.
+We will also learn to program to get open data provided by the government.
+We choose to use Python and Spark for programming over the stages of data clean-up, machine learning and visualization.
+Each lecture will begin with background concepts to cover the day's topics.
+Then the rest of the class will be spent on lab sessions for the students to apply their learning and to complete programming exercises.
+
+## 주별 강의 (--는 범위에서 제외한다는 뜻)
+
+주 | 일자 | 내용 | 실제
+-----|-----|-----|-----
+주 1 |  9월 1주 | 강의 소개 
+주 2 |  9월 2주 | 빅데이터 관련 소개, 설치
+주 3 |  9월 3주 | Spark RDD
+주 4 |  9월 4주 | Spark Dataframe
+주 5 |  10월 1주 | 데이터 변환, 자연어처리
+주 6 |  10월 2주 | 기계학습 소개, 상관관계
+주 7 |  10월 3주 | 회귀분석
+주 8 |  10.21 ~ 26 | 중간 시험 (수업시간 시험)
+주 9 |  10월 5주 | 로지스틱 회귀
+주 10 |  11월 1주 | kNN
+주 11 |  11월 2주 | SVM
+주 12 |  11월 3주 | Decision Tree
+주 13 |  11월 4주 | 추천
+주 14 |  12월 1주 | 발표
+주 15 |  12.16 ~ 21 | 기말시험 (수업시간 시험)
 
 ## 과제
+* 빅데이터 과제를 제안하여, 완성한다. 데이터는 댓글, 열린데이터 등 사용.
+* 다음 일정에 따라 ecampus에 제출한다.
 
-* 세미나 발표
-* 무작위 검증 보고서
-* 텍스트 처리
-
-## 평가기준
-
-* 준비
-    * 시간에 맞추어 준비 자료를 올렸는가?
-        * 자료파일, 프로그램, 결과파일
-        * 발표 전 주 토요일까지
-    * 준비자료가 완성되었는가?
-    * 사례를 완성했는가?
-* 이해
-    * 발표 중간 질문에 이해하고 답하였는가?
-    * 발표를 이해하지 못하고 설명하지 못하는 부분이 있었는가?
-* 전달
-    * 듣는 사람의 질문을 유도하였는가?
-    * 듣는 사람의 질문에 충분히 답을 할 수 있었는가?
-
+주 | 기한 | 내용
+-----|-----|-----
+1차 | 7주 토요일 | 문제를 정하고, 어떤 데이터를 사용할 것인지. ecampus에 제출
+2차 | 13주 토요일 | 전체 제출. 문서출력 및 ecampus에 소스코드 제출. 14주차 발표.
 
 ## 참고문헌
-* Harrington, Peter. Machine learning in action. Manning, 2012. -> python
 
-* James, Gareth, et al. An introduction to statistical learning. Vol. 112. New
-York: springer, 2013. -> R
-
-* Segaran, Toby. Programming collective intelligence: building smart web 2.0
-applications. " O'Reilly Media, Inc.", 2007. -> python
-
-* Bell, Jason. Machine learning: Hands-on for developers and technical
-professionals. John Wiley & Sons, 2014. -> weka
-
-* Murphy, Kevin P. Machine learning: a probabilistic perspective. MIT press,
-2012. -> no programming but full of equations
-
-* Conway, Drew, and John Myles White. Machine Learning for Email: Spam Filtering
-and Priority Inbox. " O'Reilly Media, Inc.", 2011. -> R
-
-* Conway, Drew, and John White. Machine learning for hackers. " O'Reilly Media,
-Inc.", 2012. -> R
-
-* Hackeling, Gavin. Mastering Machine Learning with scikit-learn. Packt
-Publishing Ltd, 2014. -> python library
-
-* Shalev-Shwartz, Shai, and Shai Ben-David. Understanding machine learning: From
-theory to algorithms. Cambridge University Press, 2014. -> theory
-
-* Marsland, Stephen. Machine learning: an algorithmic perspective. CRC press,
-2015. -> python
 
