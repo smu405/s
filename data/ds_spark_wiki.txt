@@ -1,0 +1,10 @@
+Wikipedia
+Apache Spark is an open source cluster computing framework.
+아파치 스파크는 오픈 소스 클러스터 컴퓨팅 프레임워크이다.
+Apache Spark Apache Spark Apache Spark Apache Spark
+아파치 스파크 아파치 스파크 아파치 스파크 아파치 스파크
+Originally developed at the University of California, Berkeley's AMPLab,
+the Spark codebase was later donated to the Apache Software Foundation,
+which has maintained it since.
+Spark provides an interface for programming entire clusters with
+implicit data parallelism and fault-tolerance.
