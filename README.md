@@ -1,8 +1,8 @@
 [![Gitter](https://badges.gitter.im/smu405/s.svg)](https://gitter.im/smu405/s?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-# 빅데이터 프로그래밍
+# 빅데이터 분석
 
-* 최종수정일 202409
+* 최종수정일 202509
 
 ## 교과목 개요
 
@@ -17,7 +17,7 @@
     * 모듈2: 데이터저장 file (csv, json), nosql
     * 모듈3: 분석 추론, 머신러닝
     * 모듈4: 실시간 분석 Spark
-    * 모듈5: 시각화
+    * 모듈5: 시각화, 보고서
 
 This class aims to teach programming required over the steps to analyze large-scale datasets.
 The students will learn how to collect the data by crawling web sites and use OAuth protocols and REST API.
@@ -34,18 +34,18 @@ Then the rest of the class will be spent on lab sessions for the students to app
 주 1 |  9월 1주 | 강의 소개, 환경설치, Python, Numpy
 주 2 |  9월 2주 | 오픈데이터 OAuth, REST API, XML, JSON, 공공데이터
 주 3 |  9월 3주 | 오픈데이터
-주 4 |  9월 4주 | Pandas 주식분석
+주 4 |  9월 4주 | 주식분석 Pandas, matplotlib
 주 5 |  10월 1주 | 백테스팅
-주 6 |  10월 3주 | 백테스팅
+주 6 |  10월 2주 | 추석
 주 7 |  10월 3주 | 기계학습 백테스팅
-주 8 |  10.21 ~ 27 | 중간 시험 (수업시간 시험)
+주 8 |  10월 4주 | 중간 시험 (수업시간 시험)
 주 9 |  10월 5주 | Spark RDD, map reduce
 주 10 |  11월 1주 | Spark Dataframe, schema, graph, plot
 주 11 |  11월 2주 | Spark Dataframe, groupby
 주 12 |  11월 3주 | 통계, histogram, boxplot, zscore, 윈도우 함수, Anova, 상관관계
 주 13 |  11월 4주 | 기계학습 소개, vectors, tokenizer, 자연어 처리
 주 14 |  12월 1주 | 기계학습, 데이터변환, clustering
-주 15 |  12.9 ~ 15 | 기말시험 (수업시간 시험)
+주 15 |  12월 2주 | 기말시험 (수업시간 시험)
 
 ## 과제 (미정)
 * 빅데이터 과제를 제안하여, 완성한다. 데이터는 댓글, 열린데이터 등 사용.
